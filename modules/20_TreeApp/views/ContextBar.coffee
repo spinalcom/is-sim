@@ -70,7 +70,7 @@ class ContextBar extends View
             for path in @app_data.selected_tree_items
                 item = path[ path.length - 1 ]
                 if (item instanceof TreeItem_Computable)
-                  if not item._computation_mode.get() and not item._computation_state.get()
+                  if not item._computation_mode.get() and not item._computation_state.get() and item._stop_state.get()
                     context_actions.push @run_compute_action
                   else if item._computation_state.get() or item._pending_state.get() or item._processing_state.get() or item._finish_state.get()
                     processing = true
