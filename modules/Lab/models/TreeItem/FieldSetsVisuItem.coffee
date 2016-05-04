@@ -24,9 +24,7 @@ class FieldSetsVisuItem extends TreeItem_Automatic
         if @time.val?.has_been_modified() or @_has_result.has_been_modified()
             
             @_fs_data_ptr.load (res, err) =>
-                console.log res
                 res._children[ @time.get() ]?._fs_ptr.load (res, err) =>
-                    console.log res
                     for i in [ 0 ... @visualization.color_by.lst.length ]
                         output_data = @visualization.color_by.lst[i].data._data
                         output_data.clear()

@@ -81,6 +81,7 @@ class TreeItem_Computable extends TreeItem
         if obj instanceof TreeItem_Computable
             obj._computation_state.set false
             obj._computation_mode.set false
+            obj._finish_state.set true
             obj._stop_state.set true
         for c in obj._children
            TreeItem_Computable._stop_it_rec c
