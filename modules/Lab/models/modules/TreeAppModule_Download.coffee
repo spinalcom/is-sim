@@ -33,12 +33,10 @@ class TreeAppModule_Download extends TreeAppModule
                 for path_item in items
                     item = path_item[ path_item.length - 1 ]
                     if FileSystem? and FileSystem.get_inst()? and item._files_to_save? and item._names_to_save?
-                        for i in [ 0 ... item._files_to_save.length ]
-                            fs = FileSystem.get_inst()
-                            dir_save = FileSystem._home_dir + "/__files__"
-                            name = item._names_to_save[i]
-                            file = item._files_to_save[i]
-                            fs.load_or_make_dir dir_save, ( d, err ) =>
-                                d.add_file name, file, model_type: "Path"
-                                alert name + " saved on the is-sim desk!"
+                        fs = FileSystem.get_inst()
+                        dir_save = FileSystem._home_dir + "/__files__"
+                        fs.load_or_make_dir dir_save, ( d, err ) =>
+                            for i in [ 0 ... item._files_to_save.length ]
+                                d.add_file item._names_to_save[i], item._files_to_save[i], model_type: "Path"
+                            alert "Files saved on the is-sim desk!"
                                 
