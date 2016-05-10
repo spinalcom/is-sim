@@ -24,16 +24,17 @@ class FieldSetFileItem extends TreeItem
         
                 
         if file?
-        
-            field_set = new FieldSet
-        
+            @_name.set file.name  
             @add_attr
                 _file: file
                 _ptr: file._ptr
-                _fs_ptr: new Ptr field_set
-                    
+                
+        field_set = new FieldSet
+        @add_attr
+            _fs_ptr: new Ptr field_set
+           
             
-            @_name.set file.name            
+          
             
     
             
