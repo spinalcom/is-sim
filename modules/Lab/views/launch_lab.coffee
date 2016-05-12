@@ -34,7 +34,8 @@ load_if_cookie_lab = () ->
 # launch_lab = ( userid, home_dir, main = document.body ) ->
 launch_lab = ( main = document.body ) ->
     FileSystem._home_dir = "__users__/root"
-    FileSystem._userid   = "644"
+    FileSystem._userid   = "1657"
+    FileSystem._password = "4YCSeYUzsDG8XSrjqXgkDPrdmJ3fQqHs"
     MAIN_DIV = main
         
     
