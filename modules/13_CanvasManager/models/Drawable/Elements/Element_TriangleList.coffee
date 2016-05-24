@@ -210,6 +210,11 @@ class Element_TriangleList extends Element
             
                 gl.drawArrays gl.TRIANGLES, 0, 3 * @indices.size( 1 )
                 
+                gl.disableVertexAttribArray pos
+                gl.disableVertexAttribArray nor
+                gl.disableVertexAttribArray wab
+                gl.disableVertexAttribArray tex
+                
             if display_style in [ "Wireframe", "Surface with Edges" ]
                 @_draw_lines info
             
@@ -323,6 +328,11 @@ class Element_TriangleList extends Element
                 info.cam.gl_exec_vec info, "can", ps
             
                 gl.drawArrays gl.TRIANGLES, 0, 3 * @indices.size( 1 )
+                
+                gl.disableVertexAttribArray pos
+                gl.disableVertexAttribArray nor
+                gl.disableVertexAttribArray wab
+                gl.disableVertexAttribArray tex                
                 
             if display_style in [ "Wireframe", "Surface with Edges" ]
                 @_draw_lines info

@@ -204,9 +204,13 @@ class Element_Q4List extends Element
                 
                 info.cam.gl_exec info, "cam", ps
                 info.cam.gl_exec_vec info, "can", ps
-            
 
                 gl.drawArrays gl.TRIANGLES, 0, 3 * @_get_indices().size( 1 )
+                
+                gl.disableVertexAttribArray pos
+                gl.disableVertexAttribArray nor
+                gl.disableVertexAttribArray wab
+                gl.disableVertexAttribArray tex
                 
             if display_style in [ "Wireframe", "Surface with Edges" ]
                 @_update_bufs_lines info, mesh, points
@@ -323,6 +327,11 @@ class Element_Q4List extends Element
                 info.cam.gl_exec_vec info, "can", ps
             
                 gl.drawArrays gl.TRIANGLES, 0, 3 * @_get_indices().size( 1 )
+                
+                gl.disableVertexAttribArray pos
+                gl.disableVertexAttribArray nor
+                gl.disableVertexAttribArray wab
+                gl.disableVertexAttribArray tex
                 
             if display_style in [ "Wireframe", "Surface with Edges" ]
                 @_update_bufs_lines info, mesh, points
