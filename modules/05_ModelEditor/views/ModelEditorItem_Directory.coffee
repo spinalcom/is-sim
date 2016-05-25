@@ -37,8 +37,9 @@ class ModelEditorItem_Directory extends ModelEditorItem
         @use_icons      = if params.use_icons? then params.use_icons else true
         @initial_path   = if params.initial_path? then params.initial_path else "Root"
         @use_upload     = if params.use_upload? then params.use_upload else true
-        @display_button_line = if params.display_button_line? then params.display_button_line else true
         @use_manage     = if params.use_manage? then params.use_manage else true
+        @use_share      = if params.use_share? then params.use_share else true
+        @use_download   = if params.use_download? then params.use_download else true
         
         @display        = if params.display? then params.display else "all"
         
@@ -727,13 +728,33 @@ class ModelEditorItem_Directory extends ModelEditorItem
                         u = elem._info.to_upload.get()
                         stext += " (#{ ( 100 * ( u  - r ) / u ).toFixed( 0 ) }%)"
                     
-                    #button line
-                    if @display_button_line
-                        button_line = new_dom_element
-                            parentNode: file_container
-                            className : "line_button"
-                            nodeName  : "div"
-                                        
+                    #Show file name
+                    text = new_dom_element
+                        parentNode: file_container
+                        className : "linkDirectory"
+                        nodeName  : "div"
+                        txt       : elem.name.get() + stext
+                        onclick: ( evt ) =>
+                            @rename_file text, sorted[ i ]                    
+                    
+                    #button line              
+                    button_line = new_dom_element
+                        parentNode: file_container
+                        className : "line_button"
+                        nodeName  : "div"
+                    text = new_dom_element
+                        parentNode: button_line
+                        nodeName  : "div"
+                        className : "use_button"
+                        txt       : "use"
+                        style     : 
+                            color : "#4dbce9"
+                        onclick: ( evt ) =>
+                            @open_2 sorted[ i ], @path()
+                            @cancel_natural_hotkeys evt                      
+
+                    #share button
+                    if @use_share
                         share_button = new_dom_element
                             parentNode: button_line
                             className : "share_button"
@@ -742,7 +763,9 @@ class ModelEditorItem_Directory extends ModelEditorItem
                             title     : "Share"
                             onclick: ( evt ) =>
                                 @share_popup evt, elem, elem.name.get()
-                        
+                    
+                    #download button
+                    if @use_download
                         if elem._info.model_type.get() == "Session" or elem._info.model_type.get() == "Directory"
                             #nothing to do
                         else
@@ -767,36 +790,8 @@ class ModelEditorItem_Directory extends ModelEditorItem
                                                 window.open "/sceen/_?u=" + model._server_id, "_blank"
                                             else
                                                 alert "TODO: download models"
-                    
-                    else
-                        button_line = new_dom_element
-                            parentNode: file_container
-                            className : "line_button"
-                            nodeName  : "div"
-                        text = new_dom_element
-                            parentNode: button_line
-                            nodeName  : "div"
-                            className : "use_button"
-                            txt       : "use"
-                            style     : 
-                                color : "#4dbce9"
-                            onclick: ( evt ) =>
-                                @open_2 sorted[ i ], @path()
-                                @cancel_natural_hotkeys evt   
-                        
-                    
-                    
-                    #Show file name
-                    text = new_dom_element
-                        parentNode: file_container
-                        className : "linkDirectory"
-                        nodeName  : "div"
-                        txt       : elem.name.get() + stext
-                        onclick: ( evt ) =>
-                            @rename_file text, sorted[ i ]
-                
-                    
-                    
+
+ 
                         
     #                 else if elem._info.model_type.get() == "Img"
     #                     @picture = new_dom_element
