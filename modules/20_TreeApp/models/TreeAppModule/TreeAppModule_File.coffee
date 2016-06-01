@@ -26,6 +26,8 @@ class TreeAppModule_File extends TreeAppModule
         @use_icons   = if params.use_icons? then params.use_icons else true
         @use_upload  = if params.use_upload? then params.use_upload else true
         @use_manage  = if params.use_manage? then params.use_manage else true
+        @use_share   = if params.use_share? then params.use_share else false
+        @use_download= if params.use_download? then params.use_download else false
         
         @visible = true
                 
@@ -176,7 +178,8 @@ class TreeAppModule_File extends TreeAppModule
                         use_icons   : @use_icons
                         use_upload  : @use_upload
                         use_manage  : @use_manage
-                        display_button_line  : false
+                        use_share   : @use_share
+                        use_download: @use_download
                         
                 
                 inst = undefined
