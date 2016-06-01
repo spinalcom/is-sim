@@ -338,6 +338,7 @@ class CanvasManager extends View
         if @ctx_type == "2d"
             @ctx.font = f
             @ctx.textAlign = a
+            @ctx.textBaseline = "middle"        
             @ctx.fillText t, x, y
         else
             @make_sub_canvas()
@@ -350,6 +351,7 @@ class CanvasManager extends View
                 @sup_canvas_ctx.textAlign = "center"
             else
                 @sup_canvas_ctx.textAlign = a
+            @sup_canvas_ctx.textBaseline = "middle"        
             @sup_canvas_ctx.fillText t, x, y
             
             

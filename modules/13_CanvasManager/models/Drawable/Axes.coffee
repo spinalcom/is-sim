@@ -28,14 +28,12 @@ class Axes extends Drawable
             d: 1 # "real" diameter of axes. Used only if @p == "mm" (middle middle)
             l: new ConstrainedVal( 2, { min: 0, max: 10, div: 10 } ) # line width
 
-        @theme_x = new LineTheme( new Color( 255, 0, 0 ) )
-        @theme_y = new LineTheme( new Color( 0, 255, 0 ) )
-        @theme_z = new LineTheme( new Color( 0, 0, 255 ) )
-
-        @text = new TextTheme()
-#         @text_y = new TextTheme( new Color( 0, 255, 0 ) )
-#         @text_z = new TextTheme( new Color( 0, 0, 255 ) )
-        
+        @red = new Color( 255, 0, 0 )
+        @green = new Color( 0, 255, 0 )
+        @blue = new Color( 0, 0, 255 )
+        @theme_x = new LineTheme( @red )
+        @theme_y = new LineTheme( @green )
+        @theme_z = new LineTheme( @blue )
         
     z_index: ->
         return 10000
@@ -60,12 +58,10 @@ class Axes extends Drawable
         @theme_z.draw_straight_proj info, o, z
         @theme_z.end_ctx info
         
-        @text.beg_ctx info
-        @text.draw_proj info, [ x[ 0 ] + 0.5*(x[0]-o[0]), x[ 1 ] + 0.5*(x[1]-o[1]) ], "X", new Color( 255, 0, 0 )
-        @text.draw_proj info, [ y[ 0 ] + 0.5*(y[0]-o[0]), y[ 1 ] + 0.5*(y[1]-o[1]) ], "Y", new Color( 0, 255, 0 )
-        @text.draw_proj info, [ z[ 0 ] + 0.5*(z[0]-o[0]), z[ 1 ] + 0.5*(z[1]-o[1]) ], "Z", new Color( 0, 0, 255 )
-        @text.end_ctx info
-        
+        info.cm.fillText "X", x[ 0 ] + 0.5*(x[0]-o[0]), x[ 1 ] + 0.5*(x[1]-o[1]), "14px monospace", "center", @red.to_rgba() 
+        info.cm.fillText "Y", y[ 0 ] + 0.5*(y[0]-o[0]), y[ 1 ] + 0.5*(y[1]-o[1]), "14px monospace", "center", @green.to_rgba()
+        info.cm.fillText "Z", z[ 0 ] + 0.5*(z[0]-o[0]), z[ 1 ] + 0.5*(z[1]-o[1]), "14px monospace", "center", @blue.to_rgba()
+
         
     _coords: ( info ) ->
         d = @d.get()
