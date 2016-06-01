@@ -31,6 +31,11 @@ class Axes extends Drawable
         @theme_x = new LineTheme( new Color( 255, 0, 0 ) )
         @theme_y = new LineTheme( new Color( 0, 255, 0 ) )
         @theme_z = new LineTheme( new Color( 0, 0, 255 ) )
+
+        @text = new TextTheme()
+#         @text_y = new TextTheme( new Color( 0, 255, 0 ) )
+#         @text_z = new TextTheme( new Color( 0, 0, 255 ) )
+        
         
     z_index: ->
         return 10000
@@ -54,14 +59,21 @@ class Axes extends Drawable
         @theme_z.beg_ctx info
         @theme_z.draw_straight_proj info, o, z
         @theme_z.end_ctx info
-
+        
+        @text.beg_ctx info
+        @text.draw_proj info, [ x[ 0 ] + 0.5*(x[0]-o[0]), x[ 1 ] + 0.5*(x[1]-o[1]) ], "X", new Color( 255, 0, 0 )
+        @text.draw_proj info, [ y[ 0 ] + 0.5*(y[0]-o[0]), y[ 1 ] + 0.5*(y[1]-o[1]) ], "Y", new Color( 0, 255, 0 )
+        @text.draw_proj info, [ z[ 0 ] + 0.5*(z[0]-o[0]), z[ 1 ] + 0.5*(z[1]-o[1]) ], "Z", new Color( 0, 0, 255 )
+        @text.end_ctx info
+        
+        
     _coords: ( info ) ->
         d = @d.get()
         if d < 0 or not @p.equals( "mm" )
             d = info.cam.d.get() / 10
         
         l = @r.get() * ( if @_fixed() then d else info.cam.d.get() )
-        s = 0.3 * info.mwh * @r.get()
+        s = 1.0 * info.mwh * @r.get()
         c = info.cam.O.get()
         
         o = info.re_2_sc.proj Vec_3.add c, [ 0, 0, 0 ]
