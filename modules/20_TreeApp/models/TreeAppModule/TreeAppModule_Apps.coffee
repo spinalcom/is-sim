@@ -44,28 +44,28 @@ class TreeAppModule_Apps extends TreeAppModule
 #                 for appli in app.config.selected_organisation[0].list_applications
 #                    @display_app( app, appli ) if appli?
                 
-                
-                if withConfig
-                    fs = @get_fs_instance()
-                    config_dir = FileSystem._home_dir + "/__config__" 
-                    
-                    fs.load_or_make_dir config_dir, ( current_dir, err ) ->
-                        config_file = current_dir.detect ( x ) -> x.name.get() == ".config"
-                        config_file.load ( config, err ) =>   
-                            application_list = new ModelEditorItem_Application
-                                el             : container_global 
-                                model          : config.selected_organisation[0].list_applications
-                                use_icons      : false 
-                                app            : app
-                                use_in_lab     : true
-                                
-                else
-                    application_list = new ModelEditorItem_Application
-                        el             : container_global 
-                        model          : APPS
-                        use_icons      : false 
-                        app            : app
-                        use_in_lab     : true
+################# Decomment the following to use the Organisation process #####################
+#                 if withConfig
+#                     fs = @get_fs_instance()
+#                     config_dir = FileSystem._home_dir + "/__config__" 
+#                     
+#                     fs.load_or_make_dir config_dir, ( current_dir, err ) ->
+#                         config_file = current_dir.detect ( x ) -> x.name.get() == ".config"
+#                         config_file.load ( config, err ) =>   
+#                             application_list = new ModelEditorItem_Application
+#                                 el             : container_global 
+#                                 model          : config.selected_organisation[0].list_applications
+#                                 use_icons      : false 
+#                                 app            : app
+#                                 use_in_lab     : true
+#                 else
+############################################################################################
+                application_list = new ModelEditorItem_Application
+                    el             : container_global 
+                    model          : APPS
+                    use_icons      : false 
+                    app            : app
+                    use_in_lab     : true
                  
 #                 for i_app in [0 .. APPS.length]
 #                    @display_app( app, APPS[i_app] ) if APPS[i_app]?

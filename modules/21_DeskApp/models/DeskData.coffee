@@ -40,10 +40,11 @@ class DeskData extends Model
                             {
                               panel_id: "DeskListView"
                               immortal: true
-                            }, {
-                              panel_id: "MessageListView"
-                              immortal: true
-                            }
+                            }, 
+#                             {
+#                               panel_id: "MessageListView"
+#                               immortal: true
+#                             }
                         ]
                                 
                     }, {

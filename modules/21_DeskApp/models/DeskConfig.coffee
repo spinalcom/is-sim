@@ -33,8 +33,8 @@ class DeskConfig extends Model
         @list_desk_items.push new DeskItem "Files", "Files" 
         @list_desk_items.push new DeskItem "Projects", "Projects"
         #@list_desk_items.push new DeskItem "Applications"
-        @list_desk_items.push new DeskItem "Organisations", "Organisations"
-        @list_desk_items.push new DeskItem "Sites", "Sites"
+#         @list_desk_items.push new DeskItem "Organisations", "Organisations"
+#         @list_desk_items.push new DeskItem "Sites", "Sites"
         
         @selected_list_desk_items.push @list_desk_items[0]
         

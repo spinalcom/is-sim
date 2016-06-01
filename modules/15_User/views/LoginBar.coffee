@@ -45,46 +45,47 @@ class LoginBar extends View
                 nodeName   : "div"
                 className  : "logo"
             
-            logout_div = new_dom_element
-                parentNode: @he
-                nodeName   : "div"
-                className  : "logout_div"
-                onmousedown: ( evt ) =>
-                    $.removeCookie("password", { path: '/' })
-                    window.location = "login.html"
             
-            user_div = new_dom_element
-                parentNode: @he
-                nodeName   : "div"
-                className  : "user_icon_div"
-                txt        : @config.account.email
-                style:
-                    height  : "25px"
-                    padding : "5px 0 0 27px"
-                    lineHeight : "23px"
-                    fontSize   : "14px"
-                    textAlign  : "left"
-                    cursor : "pointer"
-                onmousedown: ( evt ) =>
-                    @edit_view.edit_user evt
-            
-            
-            organisation_div = new_dom_element
-                parentNode: @he
-                nodeName   : "div"
-                className  : "organisation_icon_div"
-                txt        : if (@config.selected_organisation[0] instanceof Organisation) then @config.selected_organisation[0].name else "Select your organisation"
-                style:
-                    height  : "25px"
-                    padding : "5px 0 0 25px"
-                    lineHeight : "23px"
-                    fontSize   : "14px"
-                    textAlign  : "left"
-                    cursor : "pointer"
-                onmousedown: ( evt ) =>
-                    myWindow = window.open '',''
-                    myWindow.document.location = "organisation.html"
-                    myWindow.focus()  
-
-
+#################  Decomment to add organisation and user infos  ##################
+#             logout_div = new_dom_element
+#                 parentNode: @he
+#                 nodeName   : "div"
+#                 className  : "logout_div"
+#                 onmousedown: ( evt ) =>
+#                     $.removeCookie("password", { path: '/' })
+#                     window.location = "login.html"
+#             
+#             user_div = new_dom_element
+#                 parentNode: @he
+#                 nodeName   : "div"
+#                 className  : "user_icon_div"
+#                 txt        : @config.account.email
+#                 style:
+#                     height  : "25px"
+#                     padding : "5px 0 0 27px"
+#                     lineHeight : "23px"
+#                     fontSize   : "14px"
+#                     textAlign  : "left"
+#                     cursor : "pointer"
+#                 onmousedown: ( evt ) =>
+#                     @edit_view.edit_user evt
+#             
+#             
+#             organisation_div = new_dom_element
+#                 parentNode: @he
+#                 nodeName   : "div"
+#                 className  : "organisation_icon_div"
+#                 txt        : if (@config.selected_organisation[0] instanceof Organisation) then @config.selected_organisation[0].name else "Select your organisation"
+#                 style:
+#                     height  : "25px"
+#                     padding : "5px 0 0 25px"
+#                     lineHeight : "23px"
+#                     fontSize   : "14px"
+#                     textAlign  : "left"
+#                     cursor : "pointer"
+#                 onmousedown: ( evt ) =>
+#                     myWindow = window.open '',''
+#                     myWindow.document.location = "organisation.html"
+#                     myWindow.focus()  
+#######################################################################################
                 
