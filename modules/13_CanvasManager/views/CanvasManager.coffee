@@ -597,7 +597,7 @@ class CanvasManager extends View
             return @_catch_evt evt        
             
         # pan
-        if @mouse_b == "MIDDLE" or @mouse_b == "LEFT" and evt.ctrlKey
+        if @mouse_b == "MIDDLE" or @mouse_b == "RIGHT" or @mouse_b == "LEFT" and evt.ctrlKey
             x = @constrain_zoom != "y"
             y = @constrain_zoom != "x"
             @cam.pan ( @mouse_x - old_x ) * x, ( @mouse_y - old_y ) * y, w, h

@@ -264,7 +264,18 @@ class TreeAppData extends Model
                 @closed_tree_items.remove c
                 for p in @panel_id_list()
                     @visible_tree_items[ p ].remove c
-            
+                    
+        if item._output.length
+            for i in [ item._output.length - 1 .. 0 ]
+                c = item._output[ i ]
+                if c._output.length > 0
+                    @delete_from_tree c, false
+                child = true
+                item.rem_child c
+                @closed_tree_items.remove c
+                for p in @panel_id_list()
+                    @visible_tree_items[ p ].remove c
+                    
         if not child or root
             # delete item
             parent = @_get_parent item
