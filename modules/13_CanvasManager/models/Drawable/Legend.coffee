@@ -26,7 +26,7 @@ class Legend extends Drawable
             show_legend: show_legend
             color_map  : new Gradient
             auto_fit   : auto_fit
-            legend_size       : new ConstrainedVal( 1, { min: 0.1, max: 2, div: 0 } )
+            legend_size       : new ConstrainedVal( 0.5, { min: 0.1, max: 1, div: 0 } )
             _title     : title
             _width     : 12
             _height    : 100 
