@@ -20,7 +20,11 @@
 class TreeAppModule_Apps extends TreeAppModule
     constructor: (withConfig = true) ->
         super()
-        
+
+        APPS = new Lst;
+        for app in APPLIS
+            APPS.push new window[app]()
+    
         @name = 'Apps'
         @visible = true
                 

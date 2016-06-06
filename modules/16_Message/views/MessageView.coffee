@@ -21,7 +21,7 @@
 
 class MessageView extends View
     constructor: ( model, evt ) ->
-        @user_email = $.cookie("email")
+        @user_email = Cookies.set("email")
         super model
         @model = model
         

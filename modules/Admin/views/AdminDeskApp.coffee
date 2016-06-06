@@ -21,7 +21,7 @@
 # Tree application
 class AdminDeskApp extends View
     constructor: ( @bel, @data = new TreeAppData ) ->
-        @user_email = $.cookie("email")
+        @user_email = Cookies.set("email")
         
         @layout = @data.layout
 

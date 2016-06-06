@@ -21,7 +21,7 @@
 
 class OrganisationView extends View
     constructor: ( @bel, @data ) ->
-        @user_email = $.cookie("email")
+        @user_email = Cookies.set("email")
         
         @layout = @data.layout
                 

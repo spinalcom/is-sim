@@ -711,8 +711,8 @@ class LoginView extends View
                 lst = @responseText.split " "
                 user_id = parseInt lst[ 0 ]
                 if user_id > 0
-                    $.cookie( "email", email, {expires:7} )
-                    $.cookie( "password", password, {expires:7} )
+                    Cookies.set( "email", email, {expires:7} )
+                    Cookies.set( "password", password, {expires:7} )
                     window.location = "desk.html"
                 else
                     document.getElementById( 'pwscomment' ).innerHTML = "Wrong email/password" if document.getElementById( 'pwscomment' )

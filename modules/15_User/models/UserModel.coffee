@@ -22,7 +22,7 @@ class UserModel extends Model
     constructor: ( ) ->
         super()
         @add_attr
-            email : $.cookie("email")
+            email : Cookies.set("email")
             firstName : ""
             lastName  : ""
             created_at   : new Date()

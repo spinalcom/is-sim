@@ -1,6 +1,6 @@
 <html>
   <head> 
-    <title>is'sim Login</title> 
+    <title>is'sim Desk</title> 
     <link rel="icon" type="image/png" href="favicone.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>     
 
@@ -13,15 +13,17 @@
     <!-- is-sim js -->    
     <script type="text/javascript" src="models-manager/is-sim/is-sim.models.js"></script>
     <script type="text/javascript" src="models-manager/is-sim/is-sim.views.js"></script>
+    <script type="text/javascript" src="models-manager/is-sim.config.js"></script>
 
     <!-- libJS js -->
-    <script src="libJS/jQuery/jQuery.js"></script>
-    <script src="libJS/jQuery/carhartl-jquery-cookie-92b7715/jquery.cookie.js"></script>
+    <script src="libJS/jquery/dist/jquery.js"></script>
+    <script src="libJS/js-cookie/src/js.cookie.js"></script>
+    <script> for (var file of LIBS){ document.write("<scr"+"ipt type=\"text/javascript\" src=\"browser-organ/libJS/" + file + ".js\"></scr"+"ipt>"); } </script>
 
     <!-- models -->
-    <!-- put the models.js files here -->
-    
-  <body onload="launch_if_cookie_login();">
+    <script> for (var file of MODELS){ document.write("<scr"+"ipt type=\"text/javascript\" src=\"models-manager/gen/" + file + ".js\"></scr"+"ipt>"); } </script>
+
+  <body onload="launch_desk();">
   </body> 
 </html>
 
