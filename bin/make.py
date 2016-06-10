@@ -33,6 +33,6 @@ for s in sorted(stylesheets):
     exec_cmd( "cat is-sim.stylesheets.css " + s + " > is-sim.stylesheets_tmp.css" )
     exec_cmd( "mv is-sim.stylesheets_tmp.css is-sim.stylesheets.css" )
 
-exec_cmd( "cp modules/Admin/admin.html ../../browser-organ" )
-exec_cmd( "cp modules/Desk/desk.html ../../browser-organ" )
-exec_cmd( "cp modules/Lab/lab.html ../../browser-organ" )
+exec_cmd( "cp modules/Admin/admin.html ../../browser-organs" )
+exec_cmd( "cp modules/Desk/desk.html ../../browser-organs" )
+exec_cmd( "cp modules/Lab/lab.html ../../browser-organs" )
