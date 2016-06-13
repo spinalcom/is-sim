@@ -36,6 +36,7 @@ class ModelEditorItem_Directory extends ModelEditorItem
         @use_breadcrumb = if params.use_breadcrumb? then params.use_breadcrumb else true
         @use_icons      = if params.use_icons? then params.use_icons else true
         @initial_path   = if params.initial_path? then params.initial_path else "Root"
+        @use_use        = if params.use_use? then params.use_use else true
         @use_upload     = if params.use_upload? then params.use_upload else true
         @use_manage     = if params.use_manage? then params.use_manage else true
         @use_share      = if params.use_share? then params.use_share else true
@@ -735,6 +736,7 @@ class ModelEditorItem_Directory extends ModelEditorItem
                         nodeName  : "div"
                         txt       : elem.name.get() + stext
                         onclick: ( evt ) =>
+                            console.log sorted[i]
                             @rename_file text, sorted[ i ]                    
                     
                     #button line              
@@ -742,16 +744,19 @@ class ModelEditorItem_Directory extends ModelEditorItem
                         parentNode: file_container
                         className : "line_button"
                         nodeName  : "div"
-                    text = new_dom_element
-                        parentNode: button_line
-                        nodeName  : "div"
-                        className : "use_button"
-                        txt       : "use"
-                        style     : 
-                            color : "#4dbce9"
-                        onclick: ( evt ) =>
-                            @open_2 sorted[ i ], @path()
-                            @cancel_natural_hotkeys evt                      
+                            
+                    # use button        
+                    if @use_use
+                        use = new_dom_element
+                            parentNode: button_line
+                            nodeName  : "div"
+                            className : "use_button"
+                            txt       : "use"
+                            style     : 
+                                color : "#4dbce9"
+                            onclick: ( evt ) =>
+                                @open_2 sorted[ i ], @path()
+                                @cancel_natural_hotkeys evt                      
 
                     #share button
                     if @use_share
