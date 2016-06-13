@@ -736,6 +736,7 @@ class ModelEditorItem_Directory extends ModelEditorItem
                         nodeName  : "div"
                         txt       : elem.name.get() + stext
                         onclick: ( evt ) =>
+                            console.log sorted[i]
                             @rename_file text, sorted[ i ]                    
                     
                     #button line              
