@@ -64,7 +64,7 @@ class TreeAppModule_Apps extends TreeAppModule
 #                                 use_in_lab     : true
 #                 else
 ############################################################################################
-                application_list = new ModelEditorItem_Application
+                application_list = new ModelEditorItem_ApplicationLite
                     el             : container_global 
                     model          : APPS
                     use_icons      : false 
@@ -97,7 +97,7 @@ class TreeAppModule_Apps extends TreeAppModule
                     #alert inst.div.offsetLeft + " " + inst.div.offsetTop + " " +  inst.div.offsetHeight + " " + inst.div.offsetWidth
                 #alert "top : " + Ptop + " left : " + Pleft + " width : " +  Pwidth + " height : " + Pheight
                 
-                p = new_popup "My organisation apps", event: evt, child: container_global, top_x: Pleft, top_y: Ptop, width: Pwidth, height: Pheight, onclose: =>
+                p = new_popup "My apps", event: evt, child: container_global, top_x: Pleft, top_y: Ptop, width: Pwidth, height: Pheight, onclose: =>
                     @onPopupClose( app )
                 app.active_key.set false
                 
