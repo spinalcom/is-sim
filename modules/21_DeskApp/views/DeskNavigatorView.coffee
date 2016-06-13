@@ -86,6 +86,7 @@ class DeskNavigatorView extends View
                           use_icons      : true
                           use_upload     : true
                           use_breadcrumb : true
+                          use_use        : false
                           display        : "all" 
                           
             else if selected_list_desk_items == "OrganisationFiles"
@@ -101,6 +102,7 @@ class DeskNavigatorView extends View
                       use_icons      : true
                       use_upload     : true
                       use_breadcrumb : true
+                      use_use        : false                          
                       display        : "all" 
             
             
