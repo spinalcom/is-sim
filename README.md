@@ -54,6 +54,8 @@ The lab is the working environment of is-sim. It is composed of different panels
   1. **Main toolbar**: Inclusion of your files and applications, animation panel if you have applications that use time parameters.
   2. **Scene panel**: Representation of the whole architecture of the Lab data. Data in is-sim is represented by tree-items displayed here. The **Session** item is the main model of the Lab.
   3. **3D window**: WebGL environment that can display the drawable models present in the Scene panel. The coordinates system is represented in the bottom-left corner and a toolbar to move the camera, hide elements and splice the window is at the top.
+  4. **Inspector panel**: Display of the attributes of the tree-item selected in the Scene panel. Attributes are sub-models of a model that allows to have structurated data.
+  5. **Contextual toolbar**: Display of buttons actions associated to the selected tree-item in the Scene panel. These actions are analytics or algorithms that can act on the data (the whole session, not only the selected tree-item).
 
 
 
