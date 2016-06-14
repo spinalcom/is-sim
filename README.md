@@ -48,3 +48,12 @@ The desk panel allows you to handle files in your SpinalCore database and create
 
 ### Lab
 ![lab](https://cloud.githubusercontent.com/assets/14069348/16004145/5b2eb254-3160-11e6-9af8-69be8e7b9e65.png)
+![lab_ex2](https://cloud.githubusercontent.com/assets/14069348/16035930/e526a110-3219-11e6-8418-33b73f4a0ca1.png)
+
+The lab is the working environment of is-sim. It is composed of different panels/toolbars:
+  1. **Main toolbar**: Inclusion of your files and applications, animation panel if you have applications that use time parameters.
+  2. **Scene panel**: Representation of the whole architecture of the Lab data. Data in is-sim is represented by tree-items displayed here. The **Session** item is the main model of the Lab.
+  3. **3D window**: WebGL environment that can display the drawable models present in the Scene panel. The coordinates system is represented in the bottom-left corner and a toolbar to move the camera, hide elements and splice the window is at the top.
+
+
+
