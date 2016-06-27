@@ -134,10 +134,13 @@ class Mesh extends Drawable
                 
             # draw points if necessary
             draw_points = false
+            
+            # 2d screen projection
+            proj = for p, i in @points
+                info.re_2_sc.proj p.pos.get()
+                    
             if @visualization.point_edition?.get() and info.sel_item[ @model_id ]? # when this is selected and points are editable
-                # 2d screen projection
-                proj = for p, i in @points
-                    info.re_2_sc.proj p.pos.get()
+
             
                 # std points
                 @_theme.editable_points.beg_ctx info

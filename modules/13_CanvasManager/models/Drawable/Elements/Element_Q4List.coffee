@@ -413,7 +413,7 @@ class Element_Q4List extends Element
         
         pos = gl.getAttribLocation ps, "pos"
         gl.enableVertexAttribArray pos
-        gl.bindBuffer gl.ARRAY_BUFFER, @_lns_buffer
+        gl.bindBuffer gl.ARRAY_BUFFER, @_lns_buffer[0]
         gl.vertexAttribPointer pos, 3, gl.FLOAT, false, 0, 0
         
         col = gl.getUniformLocation ps, "col"
