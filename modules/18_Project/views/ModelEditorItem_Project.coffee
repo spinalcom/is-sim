@@ -207,7 +207,7 @@ class ModelEditorItem_Project extends ModelEditorItem
                 cssFloat : "left"
             onclick: ( evt ) ->
                 date = new Date()
-                name = prompt "Project name", date.toLocaleFormat()
+                name = prompt "Project name", date.toString()
                 td = new TreeAppData
                 td.new_session()                        
                 td.modules.push new TreeAppModule_UndoManager
