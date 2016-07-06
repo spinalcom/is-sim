@@ -23,6 +23,7 @@ class CanvasPoint extends Drawable
         super()
         
         @add_attr
+            name      : "Point"
             point     : new Point pos
             radius    : new ConstrainedVal( 6, { min: 1, max: 20 } )
             color     : if params.color? then params.color else new Color( 255, 255, 255, 255 )

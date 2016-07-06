@@ -30,7 +30,7 @@ class FieldSet extends Drawable
         
     update_min_max: ( x_min, x_max ) ->
         @color_by.lst[ 0 ]?.data._mesh?.update_min_max x_min, x_max
-        @color_by.lst[ 0 ]?.data._data[0].field._mesh?.update_min_max x_min, x_max
+        @color_by.lst[ 0 ]?.data._data[0]?.field?._mesh?.update_min_max x_min, x_max
 
     get_model_editor_parameters: ( res ) ->
         res.model_editor[ "color_by" ] = ModelEditorItem_ChoiceWithEditableItems

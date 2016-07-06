@@ -49,6 +49,7 @@ class TreeAppAction_Save extends TreeAppModule
                         #name = item.to_string()
                         name = prompt "Item name", item.to_string() + new Date()
                         dir_save = FileSystem._home_dir
+                        dir_save = dir_save + "/__files__"
                         fs.load_or_make_dir dir_save, ( d, err ) =>
                             d.add_file name, item, model_type: "TreeItem"
                 
