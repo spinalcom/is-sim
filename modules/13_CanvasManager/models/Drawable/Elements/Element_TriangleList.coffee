@@ -540,9 +540,12 @@ class Element_TriangleList extends Element
                 nor = new Float32Array 3 * dim * @indices.size( 1 )
                 lns = new Float32Array 6 * dim * @indices.size( 1 )
                 for i in [ 0 ... @indices.size( 1 ) ]
-                    p0 = points[ @indices.get [ 0, i ] ].pos.get()
-                    p1 = points[ @indices.get [ 1, i ] ].pos.get()
-                    p2 = points[ @indices.get [ 2, i ] ].pos.get()
+                    p0 = points[ @indices.get [ 0, i ] ].pos?.get()
+                    p1 = points[ @indices.get [ 1, i ] ].pos?.get()
+                    p2 = points[ @indices.get [ 2, i ] ].pos?.get()
+                    if ( not p0 or not p1 or not p2 )
+                        continue
+                    
                     nn = Vec_3.nor( Vec_3.cro( Vec_3.sub( p1, p0 ), Vec_3.sub( p2, p0 ) ) )
                     
                     pts[ cpp += 1 ] = v for v in p0

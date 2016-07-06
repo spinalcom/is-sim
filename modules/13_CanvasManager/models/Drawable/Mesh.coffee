@@ -38,7 +38,7 @@ class Mesh extends Drawable
                 line_color: @_theme.lines.color
             
             # geometry
-            points   : new Lst_Point # "add_point" can be used to fill the list
+            points   : new Lst # "add_point" can be used to fill the list
             _elements: [] # list of Element_Triangle, Element_Line, ...
             
             # helpers
@@ -72,17 +72,18 @@ class Mesh extends Drawable
     # get the maximal values or coordinates (absolute)
     bounding_coordinates: () ->
         
-        # initialization
-        p0 = @points[0].pos.get()
-        bc = [ [ p0[0], p0[0] ], [ p0[1], p0[1] ], [ p0[2], p0[2] ] ]
         
-        for point in @points
-            p = point.pos
-            for i in [ 0 .. 2 ]
-                if p[ i ].get() > bc[ i ][ 0 ]
-                    bc[ i ][ 0 ] = p[ i ].get()
-                else if p[ i ].get() < bc[ i ][ 1 ]
-                    bc[ i ][ 1 ] = p[ i ].get()
+        for point in @points when point instanceof Point
+            if not bc
+                p0 = point.pos.get()
+                bc = [ [ p0[0], p0[0] ], [ p0[1], p0[1] ], [ p0[2], p0[2] ] ]
+            else    
+                p = point.pos
+                for i in [ 0 .. 2 ]
+                    if p[ i ].get() > bc[ i ][ 0 ]
+                        bc[ i ][ 0 ] = p[ i ].get()
+                    else if p[ i ].get() < bc[ i ][ 1 ]
+                        bc[ i ][ 1 ] = p[ i ].get()
         return bc
     
     nb_points: ->
@@ -136,7 +137,7 @@ class Mesh extends Drawable
             draw_points = false
             
             # 2d screen projection
-            proj = for p, i in @points
+            proj = for p, i in @points when p instanceof Point
                 info.re_2_sc.proj p.pos.get()
                     
             if @visualization.point_edition?.get() and info.sel_item[ @model_id ]? # when this is selected and points are editable
@@ -151,7 +152,7 @@ class Mesh extends Drawable
                 # selected points
                 if @_selected_points.length
                     @_theme.selected_points.beg_ctx info
-                    for p in @_selected_points
+                    for p in @_selected_points when p instanceof Point
                         n = info.re_2_sc.proj p.pos.get()
                         @_theme.selected_points.draw_proj info, n
                     @_theme.selected_points.end_ctx info
@@ -159,7 +160,7 @@ class Mesh extends Drawable
                 # preselected points
                 if @_pelected_points.length
                     @_theme.highlighted_points.beg_ctx info
-                    for p in @_pelected_points
+                    for p in @_pelected_points when p instanceof Point
                         n = info.re_2_sc.proj p.pos.get()
                         @_theme.highlighted_points.draw_proj info, n
                     @_theme.highlighted_points.end_ctx info
@@ -356,7 +357,7 @@ class Mesh extends Drawable
     
     
     update_min_max: ( x_min, x_max ) ->
-        for m in @points
+        for m in @points when m instanceof Point
             p = m.pos.get()
             for d in [ 0 ... 3 ]
                 x_min[ d ] = Math.min x_min[ d ], p[ d ]
