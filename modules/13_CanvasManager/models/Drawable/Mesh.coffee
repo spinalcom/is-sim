@@ -277,6 +277,7 @@ class Mesh extends Drawable
                             return false
                         return true
                     else
+                        @_selected_points.clear()
                         @_pelected_points.clear()
                         
                     # something with elements ?
