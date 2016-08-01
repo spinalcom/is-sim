@@ -413,7 +413,7 @@ class Element_Q4List extends Element
         
         pos = gl.getAttribLocation ps, "pos"
         gl.enableVertexAttribArray pos
-        gl.bindBuffer gl.ARRAY_BUFFER, @_lns_buffer
+        gl.bindBuffer gl.ARRAY_BUFFER, @_lns_buffer[0]
         gl.vertexAttribPointer pos, 3, gl.FLOAT, false, 0, 0
         
         col = gl.getUniformLocation ps, "col"
@@ -443,9 +443,12 @@ class Element_Q4List extends Element
                 nor = new Float32Array 3 * dim * @_get_indices().size( 1 )
                 lns = new Float32Array 6 * dim * @_get_indices().size( 1 )
                 for i in [ 0 ... @_get_indices().size( 1 ) ]
-                    p0 = points[ @_get_indices().get [ 0, i ] ].pos.get()
-                    p1 = points[ @_get_indices().get [ 1, i ] ].pos.get()
-                    p2 = points[ @_get_indices().get [ 2, i ] ].pos.get()
+                    p0 = points[ @_get_indices().get [ 0, i ] ].pos?.get()
+                    p1 = points[ @_get_indices().get [ 1, i ] ].pos?.get()
+                    p2 = points[ @_get_indices().get [ 2, i ] ].pos?.get()
+                    if ( not p0 or not p1 or not p2 )
+                        continue
+                    
                     nn = Vec_3.nor( Vec_3.cro( Vec_3.sub( p1, p0 ), Vec_3.sub( p2, p0 ) ) )
                     
                     pts[ cpp += 1 ] = v for v in p0
@@ -495,10 +498,12 @@ class Element_Q4List extends Element
             nor = new Float32Array 4 * dim * @indices.size( 1 )
             lns = new Float32Array 8 * dim * @indices.size( 1 )
             for i in [ 0 ... @indices.size( 1 ) ]
-                p0 = points[ @indices.get [ 0, i ] ].pos.get()
-                p1 = points[ @indices.get [ 1, i ] ].pos.get()
-                p2 = points[ @indices.get [ 2, i ] ].pos.get()
-                p3 = points[ @indices.get [ 3, i ] ].pos.get()
+                p0 = points[ @indices.get [ 0, i ] ].pos?.get()
+                p1 = points[ @indices.get [ 1, i ] ].pos?.get()
+                p2 = points[ @indices.get [ 2, i ] ].pos?.get()
+                p3 = points[ @indices.get [ 3, i ] ].pos?.get()
+                if ( not p0 or not p1 or not p2 or not p3 )
+                    continue                
                 
                 nn = Vec_3.nor( Vec_3.cro( Vec_3.sub( p1, p0 ), Vec_3.sub( p2, p0 ) ) )
                 
