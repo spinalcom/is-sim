@@ -29,7 +29,7 @@ class ContextBar extends View
         
         @run_compute_action =
             txt: "run"
-            ico: "img/run_compute.png"
+            fa : "fa-play"
             loc: true
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
@@ -51,7 +51,7 @@ class ContextBar extends View
 #                         
         @stop_compute_action = 
             txt: "stop"
-            ico: "img/stop_compute.png"
+            fa : "fa-stop"
             loc: true
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
@@ -117,8 +117,14 @@ class ContextBar extends View
             container_icon = new_dom_element
                     parentNode : block
                     nodeName   : "span"
-                    className  : "ContextModuleProcessig"
-        
+                    className  : "fa fa-cog fa-spin fa-3x fa-fw"
+                    style:
+                        display: "inline-block"
+                        textAlign: "center"
+                        width: "100%"
+                        margin: "10px 0 0 0"
+                    
+                    
         for act, j in context_actions when act.vis != false 
             @_select_icon_type_rec act, block, 1
 
