@@ -146,7 +146,7 @@ class Mesh_v2 extends Drawable
             draw_points = false
             
             # 2d screen projection
-            proj = for i in [ 0 ... @points[0].size(1) ]
+            proj = for i in [ 0 ... @points[0]?.size(1) ]
                 info.re_2_sc.proj [ @points[0].get [ 0, i ], @points[0].get [ 1, i ], @points[0].get [ 2, i ] ]
                 
 #             proj = for p, i in @points[0] when p instanceof Point
@@ -371,11 +371,9 @@ class Mesh_v2 extends Drawable
     
     
     update_min_max: ( x_min, x_max ) ->
-        for i in [ 0 ... @points.size(1) ]
-            p = [ @points.get([0,i]), @points.get([1,i]), @points.get([2,i]) ]
-            
-#         for m in @points when m instanceof Point
-#             p = m.pos.get()
+        for i in [ 0 ... @points[0]?.size(1) ]
+            p = [ @points[0].get([0,i]), @points[0].get([1,i]), @points[0].get([2,i]) ]
+
             for d in [ 0 ... 3 ]
                 x_min[ d ] = Math.min x_min[ d ], p[ d ]
                 x_max[ d ] = Math.max x_max[ d ], p[ d ]

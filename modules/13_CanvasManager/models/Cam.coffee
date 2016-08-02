@@ -48,7 +48,7 @@ class Cam extends Model
         # normalization
         X = Vec_3.nor @X.get()
         Y = Vec_3.nor Vec_3.sub( @Y.get(), Vec_3.mus( Vec_3.dot( X, @Y.get() ), X ) )
-        Z = Vec_3.nor Vec_3.cro X, Y
+        Z = Vec_3.nor Vec_3.cro Y, X    # <- inverted to have a right-handed coord system
         O = [ Vec_3.dot( @O.get(), X ), Vec_3.dot( @O.get(), Y ), Vec_3.dot( @O.get(), Z ) ]
         f = 2 / @d.get() # * ( 1.0 + p *  ) )
         g = -f
@@ -158,7 +158,7 @@ class Cam extends Model
     # around @C
     rotate: ( x, y, z ) ->
         if @threeD.get()
-            R = @s_to_w_vec [ x, y, z ]
+            R = @s_to_w_vec [ -x, -y, z ]
             @X.set Vec_3.rot @X.get(), R
             @Y.set Vec_3.rot @Y.get(), R
             @O.set Vec_3.add( @C.get(), Vec_3.rot( Vec_3.sub( @O.get(), @C.get() ), R ) )
