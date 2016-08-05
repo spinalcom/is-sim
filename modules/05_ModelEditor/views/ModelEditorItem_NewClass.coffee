@@ -48,6 +48,37 @@ class ModelEditorItem_NewClass extends ModelEditorItem
                 @name = @nameInput.value
 
 
+        # language option
+        @languageTxt = new_dom_element
+            parentNode : @ed
+            nodeName   : "span"
+            txt: "Language:"
+            style      :
+                display : "inline-block"
+                fontSize : 12
+                color: "#262626"
+                width: 0.3*@ew + "%"           
+                paddingLeft : 0.5 * (100 - @get_item_width()) + "%"          
+                paddingTop : "5px"
+        @languageSelect = new_dom_element
+            parentNode: @ed
+            nodeName  : "select"
+            onchange  : =>
+                @snapshot()
+                @language = @languageSelect.value
+            style:
+                width: 0.7*@ew + "%"
+                
+        for type in [ 'JavaScript', 'CoffeeScript' ]
+            new_dom_element
+                parentNode : @languageSelect
+                nodeName   : "option"
+                txt        : type
+                value      : type            
+        @language = @languageSelect.value
+
+
+
 #         # extend name
 #         @extendTxt = new_dom_element
 #             parentNode : @ed
@@ -87,11 +118,15 @@ class ModelEditorItem_NewClass extends ModelEditorItem
             txt: "Create JS Class"
             onclick: =>
                 if @name 
-                    blob = new Blob([ @fileText @name ], {type: "text/plain;charset=utf-8"})
-                    saveAs(blob, @name + ".js")
+                    if @language == "JavaScript"
+                        blob = new Blob([ @fileTextJS @name ], {type: "text/plain;charset=utf-8"})
+                        saveAs(blob, @name + ".js")
+                    else if @language == "CoffeeScript"
+                        blob = new Blob([ @fileTextCoffee @name ], {type: "text/plain;charset=utf-8"})
+                        saveAs(blob, @name + ".coffee")
 
 
-    fileText: ( name ) ->
+    fileTextJS: ( name ) ->
         text = "function " + name + "() {\n
     " + name + ".super(this);\n
 \n"
@@ -108,3 +143,18 @@ class ModelEditorItem_NewClass extends ModelEditorItem
 \n
 spinalCore.extend(" + name + ", " + @model._name_class.get() + ");"
         
+        
+        
+    fileTextCoffee: ( name ) ->
+        text = "class " + name + " extends " + @model._name_class.get() + "\n
+    constructor: ( ) ->\n
+        super()\n
+\n"
+        if @model._gen_attr
+            text += "
+        @add_attr\n"
+            for attr in @model._gen_attr
+                text += "
+            " + attr[0] + ": new " + attr[1] + "\n"
+        text += "\n"
+  
