@@ -22,6 +22,9 @@ class ModelEditorItem_NewAttr extends ModelEditorItem
     constructor: ( params ) ->
         super params
         
+        # default values
+        @name = "my_attribute"   
+#         @val = ""
         
         # attribute name
         @nameTxt = new_dom_element
@@ -38,6 +41,7 @@ class ModelEditorItem_NewAttr extends ModelEditorItem
         @nameInput = new_dom_element
             parentNode: @ed
             nodeName: "input"
+            value: @name
             style:
                 width: 0.7*@ew + "%"
             onchange  : =>
@@ -66,7 +70,7 @@ class ModelEditorItem_NewAttr extends ModelEditorItem
             style:
                 width: 0.7*@ew + "%"
                 
-        for type in [ 'Val', 'Str', 'Bool', 'Lst', 'TypedArray_Int32' ]
+        for type in [ 'Val', 'Str', 'Bool', 'Lst', 'TypedArray_Int32', 'Mesh', 'Point' ]
             new_dom_element
                 parentNode : @typeSelect
                 nodeName   : "option"
@@ -75,26 +79,26 @@ class ModelEditorItem_NewAttr extends ModelEditorItem
         @type = @typeSelect.value
 
 
-        # attribute init value
-        @valTxt = new_dom_element
-            parentNode : @ed
-            nodeName   : "span"
-            txt: "Value:"
-            style      :
-                display : "inline-block"
-                fontSize : 12
-                color: "#262626"
-                width: 0.3*@ew + "%"           
-                paddingLeft : 0.5 * (100 - @get_item_width()) + "%"          
-                paddingTop : "5px"
-        @valInput = new_dom_element
-            parentNode: @ed
-            nodeName: "input"
-            style:
-                width: 0.7*@ew + "%"
-            onchange  : =>
-                @snapshot()
-                @val = @valInput.value
+#         # attribute init value
+#         @valTxt = new_dom_element
+#             parentNode : @ed
+#             nodeName   : "span"
+#             txt: "Value:"
+#             style      :
+#                 display : "inline-block"
+#                 fontSize : 12
+#                 color: "#262626"
+#                 width: 0.3*@ew + "%"           
+#                 paddingLeft : 0.5 * (100 - @get_item_width()) + "%"          
+#                 paddingTop : "5px"
+#         @valInput = new_dom_element
+#             parentNode: @ed
+#             nodeName: "input"
+#             style:
+#                 width: 0.7*@ew + "%"
+#             onchange  : =>
+#                 @snapshot()
+#                 @val = @valInput.value
 
 
         # confirmation
@@ -113,25 +117,19 @@ class ModelEditorItem_NewAttr extends ModelEditorItem
             txt: "Create attribute"
             onclick: =>
                 if @name
+#                     if @type == "Lst" then @val = @val.split ","
+                
                     @model.mod_attr( @name, new window[@type] @val )
-                
-                
-#             onchange  : =>
-#                 @snapshot()
-#                 @model.set @input.value
-#             onfocus   : =>
-#                 @get_focus()?.set @process_id
-# 
-#         @ev?.onmousedown = =>
-#             @get_focus()?.set @process_id
-                
-#     onchange: ->
-#         if @type.has_been_modified()
-#             new ModelEditorItem_Input
-#                 model: 
-#         
-#             console.log @model
-#             console.log @name
-#             console.log @type
+                    
+#                     switch @type
+#                         when "Val" then val = @val
+#                         when "Str" then  val = "\""+ @val + "\""
+#                         when "Bool" then ( if @val == "" or @val == "false" then val = false; else val = true )
+#                         when "Lst" then  val = [ @val ]
+#                     console.log val
+                    
+                    if not @model._gen_attr then @model.add_attr({ _gen_attr: [] })
+                    @model._gen_attr.push [ @name, @type ]
+
 
         

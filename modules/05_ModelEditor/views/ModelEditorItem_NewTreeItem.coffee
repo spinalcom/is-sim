@@ -22,6 +22,34 @@ class ModelEditorItem_NewTreeItem extends ModelEditorItem
     constructor: ( params ) ->
         super params
         
+        # default values
+        @class = "TreeItem_Parametric"
+        @name = "Item"
+        
+        
+        # attribute class
+        @classTxt = new_dom_element
+            parentNode : @ed
+            nodeName   : "span"
+            txt: "Class:"
+            style      :
+                display : "inline-block"
+                fontSize : 12
+                color: "#262626"
+                width: 0.3*@ew + "%"           
+                paddingLeft : 0.5 * (100 - @get_item_width()) + "%"                
+                paddingTop : "5px"               
+        @classInput = new_dom_element
+            parentNode: @ed
+            nodeName: "input"
+            value: @class
+            style:
+                width: 0.7*@ew + "%"
+            onchange  : =>
+                @snapshot()
+                @class = @classInput.value        
+        
+        
         
         # attribute name
         @nameTxt = new_dom_element
@@ -38,6 +66,7 @@ class ModelEditorItem_NewTreeItem extends ModelEditorItem
         @nameInput = new_dom_element
             parentNode: @ed
             nodeName: "input"
+            value: @name
             style:
                 width: 0.7*@ew + "%"
             onchange  : =>
@@ -112,9 +141,10 @@ class ModelEditorItem_NewTreeItem extends ModelEditorItem
             nodeName: "button"
             txt: "Create TreeItem"
             onclick: =>
-                if @name
-                    item = new TreeItem_Parametric
+                if @name and @class
+                    item = new window[@class]()
                     item._name.set @name
+                    item._name_class.set @class
                     @model.add_child item
                 
                 
