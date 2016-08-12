@@ -64,9 +64,9 @@ class Mesh_v2 extends Drawable
     add_point: ( pos = [ 0, 0, 0 ] ) ->
         ind = @points[0].size(1) + 1
         @points[0].resize [ 3, ind ]
-        @points[0].set_val [ 0, ind ], pos[0]
-        @points[0].set_val [ 1, ind ], pos[1]
-        @points[0].set_val [ 2, ind ], pos[2]       
+        @points[0].set_val [ 0, ind-1 ], pos[0]
+        @points[0].set_val [ 1, ind-1 ], pos[1]
+        @points[0].set_val [ 2, ind-1 ], pos[2]       
 
     set_point: ( indice, pos = [ 0, 0, 0 ] ) ->
         @points[0].set_val [ 0, indice ], pos[0]
@@ -82,17 +82,17 @@ class Mesh_v2 extends Drawable
     
     # get the maximal values or coordinates (absolute)
     bounding_coordinates: () ->
-        for point in @points when point instanceof Point
+        for i in [ 0 ... @points[0].size(1) ]
             if not bc
-                p0 = point.pos.get()
+                p0 = @get_point i
                 bc = [ [ p0[0], p0[0] ], [ p0[1], p0[1] ], [ p0[2], p0[2] ] ]
             else    
-                p = point.pos
+                p = @get_point i
                 for i in [ 0 .. 2 ]
-                    if p[ i ].get() > bc[ i ][ 0 ]
-                        bc[ i ][ 0 ] = p[ i ].get()
-                    else if p[ i ].get() < bc[ i ][ 1 ]
-                        bc[ i ][ 1 ] = p[ i ].get()
+                    if p[ i ] > bc[ i ][ 0 ]
+                        bc[ i ][ 0 ] = p[ i ]
+                    else if p[ i ] < bc[ i ][ 1 ]
+                        bc[ i ][ 1 ] = p[ i ]
         return bc
     
     nb_points: ->
@@ -147,7 +147,7 @@ class Mesh_v2 extends Drawable
             
             # 2d screen projection
             proj = for i in [ 0 ... @points[0]?.size(1) ]
-                info.re_2_sc.proj [ @points[0].get [ 0, i ], @points[0].get [ 1, i ], @points[0].get [ 2, i ] ]
+                info.re_2_sc.proj @get_point(i)
                 
 #             proj = for p, i in @points[0] when p instanceof Point
 #                 console.log p, i
@@ -203,7 +203,7 @@ class Mesh_v2 extends Drawable
             return true
     
         # -> 2d canvas
-        if @points?.length
+        else if @points?.length
             # 2d screen projection
             proj = for p, i in @points
                 info.re_2_sc.proj p.pos.get()
