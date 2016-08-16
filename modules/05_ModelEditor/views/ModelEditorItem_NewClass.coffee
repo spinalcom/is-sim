@@ -118,43 +118,48 @@ class ModelEditorItem_NewClass extends ModelEditorItem
             txt: "Create JS Class"
             onclick: =>
                 if @name 
-                    if @language == "JavaScript"
-                        blob = new Blob([ @fileTextJS @name ], {type: "text/plain;charset=utf-8"})
-                        saveAs(blob, @name + ".js")
-                    else if @language == "CoffeeScript"
-                        blob = new Blob([ @fileTextCoffee @name ], {type: "text/plain;charset=utf-8"})
-                        saveAs(blob, @name + ".coffee")
-
-
-    fileTextJS: ( name ) ->
-        text = "function " + name + "() {\n
-    " + name + ".super(this);\n
-\n"
-        if @model._gen_attr
-            text += "
-    this.add_attr({\n"
-            for attr in @model._gen_attr
-                text += "
-        "+ attr[0] + ": new " + attr[1] + ",\n"
-            text += "
-    });\n"
-        text += "
-}\n
-\n
-spinalCore.extend(" + name + ", " + @model._name_class.get() + ");"
-        
-        
-        
-    fileTextCoffee: ( name ) ->
-        text = "class " + name + " extends " + @model._name_class.get() + "\n
-    constructor: ( ) ->\n
-        super()\n
-\n"
-        if @model._gen_attr
-            text += "
-        @add_attr\n"
-            for attr in @model._gen_attr
-                text += "
-            " + attr[0] + ": new " + attr[1] + "\n"
-        text += "\n"
+                    @model._class_export_name.set @name
+                    @model._class_export_language.set @language
+                    @model._class_export_state.set true
+                
+                
+#                     if @language == "JavaScript"
+#                         blob = new Blob([ @fileTextJS @name ], {type: "text/plain;charset=utf-8"})
+#                         saveAs(blob, @name + ".js")
+#                     else if @language == "CoffeeScript"
+#                         blob = new Blob([ @fileTextCoffee @name ], {type: "text/plain;charset=utf-8"})
+#                         saveAs(blob, @name + ".coffee")
+# 
+# 
+#     fileTextJS: ( name ) ->
+#         text = "function " + name + "() {\n
+#     " + name + ".super(this);\n
+# \n"
+#         if @model._gen_attr
+#             text += "
+#     this.add_attr({\n"
+#             for attr in @model._gen_attr
+#                 text += "
+#         "+ attr[0] + ": new " + attr[1] + ",\n"
+#             text += "
+#     });\n"
+#         text += "
+# }\n
+# \n
+# spinalCore.extend(" + name + ", " + @model._name_class.get() + ");"
+#         
+#         
+#         
+#     fileTextCoffee: ( name ) ->
+#         text = "class " + name + " extends " + @model._name_class.get() + "\n
+#     constructor: ( ) ->\n
+#         super()\n
+# \n"
+#         if @model._gen_attr
+#             text += "
+#         @add_attr\n"
+#             for attr in @model._gen_attr
+#                 text += "
+#             " + attr[0] + ": new " + attr[1] + "\n"
+#         text += "\n"
   

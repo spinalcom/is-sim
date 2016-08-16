@@ -21,6 +21,11 @@ class TreeItem_Parametric extends TreeItem
     constructor: ->
         super()
         
+        @add_attr
+            _class_export_name: "Item"
+            _class_export_language: "JavaScript"
+            _class_export_state: false
+        
     display_context_actions: ->
         contex_action = new Lst
         contex_action.push  new TreeAppAction_Save
