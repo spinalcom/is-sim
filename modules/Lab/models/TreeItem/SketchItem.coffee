@@ -5,7 +5,7 @@ class SketchItem extends TreeItem
         
         # attributes
         @add_attr
-            mesh: new Mesh
+            mesh: new Sketch
         
         # default values
         @_name.set name

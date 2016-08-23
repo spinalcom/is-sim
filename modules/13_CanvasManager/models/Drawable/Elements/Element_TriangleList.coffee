@@ -31,7 +31,7 @@ class Element_TriangleList extends Element
         @_lns_buffer = {}
             
     draw_gl: ( info, mesh, points, is_a_sub ) ->
-        if @_get_indices() and points.length > 0
+        if @_get_indices() and mesh.get_point 0
             # need to update the arrays ?
             @_update_bufs info, mesh, points
             
@@ -540,9 +540,10 @@ class Element_TriangleList extends Element
                 nor = new Float32Array 3 * dim * @indices.size( 1 )
                 lns = new Float32Array 6 * dim * @indices.size( 1 )
                 for i in [ 0 ... @indices.size( 1 ) ]
-                    p0 = points[ @indices.get [ 0, i ] ].pos?.get()
-                    p1 = points[ @indices.get [ 1, i ] ].pos?.get()
-                    p2 = points[ @indices.get [ 2, i ] ].pos?.get()
+                    p0 = mesh.get_point @indices.get([ 0, i ])
+                    p1 = mesh.get_point @indices.get([ 1, i ])
+                    p2 = mesh.get_point @indices.get([ 2, i ])
+
                     if ( not p0 or not p1 or not p2 )
                         continue
                     

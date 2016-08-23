@@ -443,9 +443,9 @@ class Element_Q4List extends Element
                 nor = new Float32Array 3 * dim * @_get_indices().size( 1 )
                 lns = new Float32Array 6 * dim * @_get_indices().size( 1 )
                 for i in [ 0 ... @_get_indices().size( 1 ) ]
-                    p0 = points[ @_get_indices().get [ 0, i ] ].pos?.get()
-                    p1 = points[ @_get_indices().get [ 1, i ] ].pos?.get()
-                    p2 = points[ @_get_indices().get [ 2, i ] ].pos?.get()
+                    p0 = mesh.get_point @_get_indices().get([ 0, i ])
+                    p1 = mesh.get_point @_get_indices().get([ 1, i ])
+                    p2 = mesh.get_point @_get_indices().get([ 2, i ])
                     if ( not p0 or not p1 or not p2 )
                         continue
                     
@@ -498,10 +498,10 @@ class Element_Q4List extends Element
             nor = new Float32Array 4 * dim * @indices.size( 1 )
             lns = new Float32Array 8 * dim * @indices.size( 1 )
             for i in [ 0 ... @indices.size( 1 ) ]
-                p0 = points[ @indices.get [ 0, i ] ].pos?.get()
-                p1 = points[ @indices.get [ 1, i ] ].pos?.get()
-                p2 = points[ @indices.get [ 2, i ] ].pos?.get()
-                p3 = points[ @indices.get [ 3, i ] ].pos?.get()
+                p0 = mesh.get_point @indices.get([ 0, i ])
+                p1 = mesh.get_point @indices.get([ 1, i ])
+                p2 = mesh.get_point @indices.get([ 2, i ])
+                p3 = mesh.get_point @indices.get([ 3, i ])
                 if ( not p0 or not p1 or not p2 or not p3 )
                     continue                
                 
