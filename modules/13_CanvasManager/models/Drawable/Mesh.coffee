@@ -62,6 +62,7 @@ class Mesh extends Drawable
         
         
     add_point: ( pos = [ 0, 0, 0 ] ) ->
+        if not @points[0] then @points.push new TypedArray_Float64
         ind = @points[0].size(1) + 1
         @points[0].resize [ 3, ind ]
         @points[0].set_val [ 0, ind-1 ], pos[0]
