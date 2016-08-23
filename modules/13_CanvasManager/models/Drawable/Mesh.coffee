@@ -48,7 +48,7 @@ class Mesh extends Drawable
             _selected_elements: [] # elements refs
             _pelected_elements: [] # elements refs
             
-            
+            original_index : []
             
         # default move scheme
         @move_scheme = MoveScheme_3D
