@@ -29,7 +29,7 @@ class ContextBar extends View
         
         @run_compute_action =
             txt: "run"
-            ico: "img/run_compute.png"
+            fa : "fa-play"
             loc: true
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
@@ -51,7 +51,7 @@ class ContextBar extends View
 #                         
         @stop_compute_action = 
             txt: "stop"
-            ico: "img/stop_compute.png"
+            fa : "fa-stop"
             loc: true
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
@@ -117,8 +117,14 @@ class ContextBar extends View
             container_icon = new_dom_element
                     parentNode : block
                     nodeName   : "span"
-                    className  : "ContextModuleProcessig"
-        
+                    className  : "fa fa-cog fa-spin fa-3x fa-fw"
+                    style:
+                        display: "inline-block"
+                        textAlign: "center"
+                        width: "100%"
+                        margin: "10px 0 0 0"
+                    
+                    
         for act, j in context_actions when act.vis != false 
             @_select_icon_type_rec act, block, 1
 
@@ -140,6 +146,37 @@ class ContextBar extends View
                 new_dom_element
                     parentNode : parent
                     nodeName   : "br"
+                  
+            else if act.txtico
+                container_icon = new_dom_element
+                    parentNode : parent
+                    nodeName   : "span"
+                    className  : "ContextModule"
+                    alt        : act.txt
+                    title      : act.txt + key
+                    onclick   : ( evt ) =>
+                        act.fun evt, @tree_app                          
+                de = new_dom_element
+                    nodeName   : "div"
+                    className  : "text_icon"
+                    parentNode : container_icon     
+                    txt        : act.txtico
+                  
+            else if act.fa
+                faClass = "fa " + act.fa + " fa-2x"
+                container_icon = new_dom_element
+                    parentNode : parent
+                    nodeName   : "span"
+                    className  : "ContextModule"
+                    alt        : act.txt
+                    title      : act.txt + key
+                    onclick   : ( evt ) =>
+                        act.fun evt, @tree_app                          
+                de = new_dom_element
+                    nodeName   : "i"
+                    className  : faClass
+                    parentNode : container_icon
+
                   
             else
                 container_icon = new_dom_element
@@ -178,8 +215,19 @@ class ContextBar extends View
             nodeName   : "span"
             className  : "ContextModule"
             
+        if act.fa
+            faClass = "fa " + act.fa + " fa-2x"
+            new_dom_element
+                parentNode : click_container
+                nodeName   : "i"
+                alt        : act.txt
+                title      : act.txt + key
+                className  : faClass
+                onmousedown: ( evt ) =>
+                    # assing first action to visible icon
+                    act.sub.act[ 0 ]?.fun evt, @tree_app            
         
-        if act.ico? and act.ico.length > 0
+        else if act.ico? and act.ico.length > 0
             new_dom_element
                 parentNode : click_container
                 nodeName   : "img"
@@ -203,10 +251,9 @@ class ContextBar extends View
                      
         arrow = new_dom_element
             parentNode : arrow_container
-            nodeName   : "img"
-            src        : "img/down_arrow.png"
+            nodeName   : "i"
+            className  : "fa fa-caret-down fa-lg"
             alt        : ""
-            className  : "arrow"
             
         #span that will contain hidden icon
         child_container = new_dom_element

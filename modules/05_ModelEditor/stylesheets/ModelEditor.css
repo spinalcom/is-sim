@@ -162,8 +162,8 @@ textarea {
 .PopupWindow {
     //background: #e5e5e5;
     //background: #848484;
-    padding   : 3;
-    height    : 90%;
+/*    padding   : 3;
+    height    : 90%;*/
 }
 .PopupWindow .directory_container {
     height    : 100%;

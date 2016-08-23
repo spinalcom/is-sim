@@ -24,6 +24,7 @@ class Img extends Drawable
         
         @add_attr
             src   : src
+            pos: [ 0, 0, 0 ]
             _histo: new Vec
             # _repr -> representation, compatible with web browsers
             
@@ -59,6 +60,7 @@ class Img extends Drawable
         return 1
         
     draw: ( info ) ->
+            
         if @src.has_been_modified() or @_repr?.has_been_modified() or @data.begl
             @data.begl = false
             @_get_src_data()
@@ -69,8 +71,8 @@ class Img extends Drawable
         # preparation
         @X = [ 1, 0,  0 ]
         @Y = [ 0, 1,  0 ]
-        @Z = [ 0, 0, -1 ]
-        @O = [ 0, 0,  0 ]
+        @Z = [ 0, 0,  1 ]
+        @O = [ @pos[0].get(), @pos[1].get(),  @pos[2].get() ]
         if info.shoot_cam?
             # base
             w = @data.rgba.width
@@ -117,6 +119,7 @@ class Img extends Drawable
             @Y = Vec_3.mus 1 / h, Vec_3.sub dY, @O
             @Z = Vec_3.nor Vec_3.cro @X, @Y
             
+            
         # flat image
         if @data.zmin == @data.zmax
             # same z, aligned img
@@ -135,11 +138,16 @@ class Img extends Drawable
         
     update_min_max: ( x_min, x_max ) ->
         if @data.rgba?
-            for d in [ 0 ... 3 ]
-                x_min[ d ] = Math.min x_min[ d ], 0
-            x_max[ 0 ] = Math.max x_max[ 0 ], @data.rgba.width
-            x_max[ 1 ] = Math.max x_max[ 1 ], @data.rgba.height
-            x_max[ 2 ] = Math.max x_max[ 2 ], 0
+#             for d in [ 0 ... 3 ]
+#                 x_min[ d ] = Math.min x_min[ d ], 0
+            x_min[ 0 ] = Math.min x_min[ 0 ], @pos[0].get()
+            x_min[ 1 ] = Math.min x_min[ 1 ], @pos[1].get()
+            x_min[ 2 ] = Math.min x_min[ 2 ], @pos[2].get()
+
+            x_max[ 0 ] = Math.max x_max[ 0 ], @data.rgba.width + @pos[0].get()
+            x_max[ 1 ] = Math.max x_max[ 1 ], @data.rgba.height + @pos[1].get()
+            x_max[ 2 ] = Math.max x_max[ 2 ], @pos[2].get()
+            
             
     fill_histogram: () ->
         #         canvas = document.createElement 'canvas'
@@ -265,13 +273,13 @@ class Img extends Drawable
             b = Vec_3.add( O, Vec_3.add( Vec_3.add( Vec_3.mus( w * xmax, X ), Vec_3.mus( h * ymax, Y ) ), Vec_3.mus( zmin, Z ) ) )
             c = Vec_3.add( O, Vec_3.add( Vec_3.add( Vec_3.mus( w * xmax, X ), Vec_3.mus( h * ymin, Y ) ), Vec_3.mus( zmin, Z ) ) )
             d = Vec_3.add( O, Vec_3.add( Vec_3.add( Vec_3.mus( w * xmin, X ), Vec_3.mus( h * ymax, Y ) ), Vec_3.mus( zmin, Z ) ) )
-
+            
             vtx = new Float32Array [
                 a[ 0 ], a[ 1 ], a[ 2 ],
                 b[ 0 ], b[ 1 ], b[ 2 ],
                 c[ 0 ], c[ 1 ], c[ 2 ],
                 d[ 0 ], d[ 1 ], d[ 2 ]
-            ]
+            ]            
             
             txc = new Float32Array [
                 0, 0,

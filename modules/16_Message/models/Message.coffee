@@ -24,7 +24,7 @@ class Message extends Model
         
         @add_attr
             date : ""
-            user : $.cookie("email")
+            user : Cookies.set("email")
             text:  ""
         
         @date.set (new Date()).toString().split(' ').splice(1,3).join(' ')

@@ -206,7 +206,8 @@ class ModelEditorItem_Project extends ModelEditorItem
                 height: "20px"
                 cssFloat : "left"
             onclick: ( evt ) ->
-                name = prompt "Project name", "Project" + new Date()
+                date = new Date()
+                name = prompt "Project name", date.toString()
                 td = new TreeAppData
                 td.new_session()                        
                 td.modules.push new TreeAppModule_UndoManager

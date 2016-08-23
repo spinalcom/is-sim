@@ -149,6 +149,8 @@ class PointMesher extends Drawable
                         return false
                         
                     return true
+                else
+                    @_selected.clear()
                     
         return false
                     

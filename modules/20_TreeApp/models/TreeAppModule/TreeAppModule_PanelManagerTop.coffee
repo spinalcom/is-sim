@@ -30,7 +30,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         @actions.push
             ico: "img/close_panel_grey.png"
             siz: 1
-            txt: "Close current view"
+            txt: "Close current view (Shift+X)"
             ina: _ina
             fun: ( evt, app ) ->
                 app.undo_manager.snapshot()
@@ -40,7 +40,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         @actions.push
             ico: "img/vertical_split_grey.png"
             siz: 1
-            txt: "Vertical Split"
+            txt: "Vertical split (Shift+V)"
             ina: _ina
             fun: ( evt, app ) => @split_view evt, app, 0
             key: [ "Shift+V" ]
@@ -48,7 +48,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         @actions.push
             ico: "img/horizontal_split_grey.png"
             siz: 1
-            txt: "Horizontal Split"
+            txt: "Horizontal split (Shift+H)"
             ina: _ina
             fun: ( evt, app ) => @split_view evt, app, 1
             key: [ "Shift+H" ]
@@ -56,7 +56,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         @actions.push
             ico: "img/fit_grey.png"
             siz: 1
-            txt: "Fit object to the view"
+            txt: "Fit object to the view (F)"
             ina: _ina
             fun: ( evt, app ) ->
                 for inst in app.selected_canvas_inst()
@@ -77,7 +77,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         
         @actions.push 
             ico: "img/origin_grey.png"
-            txt: "Origin Camera"
+            txt: "Origin camera (O)"
             ina: _ina
             siz: 1
             fun: ( evt, app ) ->
@@ -87,7 +87,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
             
         @actions.push 
             ico: "img/top_grey.png"
-            txt: "Watch top"
+            txt: "Watch top (T)"
             ina: _ina
             siz: 1
             fun: ( evt, app ) ->
@@ -96,7 +96,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
             key: [ "T" ]
             
         cube.sub.act.push 
-            txt: "Watch bottom"
+            txt: "Watch bottom (B)"
             ina: _ina
             vis: false
             fun: ( evt, app ) ->
@@ -106,7 +106,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
             
         @actions.push
             ico: "img/right_grey.png"
-            txt: "Watch right"
+            txt: "Watch right (R)"
             ina: _ina
             siz: 1
             fun: ( evt, app ) ->
@@ -115,7 +115,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
             key: [ "R" ]
             
         cube.sub.act.push 
-            txt: "Watch left"
+            txt: "Watch left (L)"
             ina: _ina
             vis: false
             siz: 1
@@ -127,7 +127,7 @@ class TreeAppModule_PanelManagerTop extends TreeAppModule
         @actions.push
             ico: "img/eye_closed.png"
             siz: 1
-            txt: "hide all"
+            txt: "Hide all"
             ina: _ina
 #             vis: false
             fun: ( evt, app ) ->

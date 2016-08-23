@@ -21,7 +21,7 @@
 
 class UserEditView extends View
     constructor: ( ) ->
-        @user_email = $.cookie("email")
+        @user_email = Cookies.set("email")
     
     edit_user: ( evt ) =>
         @edit_user_div = new_dom_element
@@ -289,8 +289,8 @@ class UserEditView extends View
     
     
     @get_user_information: ( user ) ->
-        email = $.cookie("email")
-        password = $.cookie("password")
+        email = Cookies.set("email")
+        password = Cookies.set("password")
         
         xhr_object = FileSystem._my_xml_http_request()
         xhr_object.open 'GET', "get_user_id?u=#{encodeURI email}&p=#{encodeURI password}", true
@@ -306,8 +306,8 @@ class UserEditView extends View
         
         
     @get_change_user_information: ( user ) ->
-        email = $.cookie("email")
-        password = $.cookie("password")
+        email = Cookies.set("email")
+        password = Cookies.set("password")
         
         xhr_object = FileSystem._my_xml_http_request()
         xhr_object.open 'GET', "get_user_id?u=#{encodeURI email}&p=#{encodeURI password}", true
@@ -328,12 +328,12 @@ class UserEditView extends View
         
         
     @get_change_user_password: ( user ) ->
-        email = $.cookie("email")
+        email = Cookies.set("email")
         old_password = document.getElementById( 'password' ).value
         new_password = document.getElementById( 'new_password' ).value
         confirmed_password = document.getElementById( 'confirme_password' ).value
 
-        if old_password == $.cookie("password") and new_password == confirmed_password
+        if old_password == Cookies.set("password") and new_password == confirmed_password
             xhr_object = FileSystem._my_xml_http_request()
             xhr_object.open 'GET', "get_change_user_password?e=#{encodeURI email}&op=#{encodeURI old_password}&np=#{encodeURI new_password}&cp=#{encodeURI confirmed_password}", true
             xhr_object.onreadystatechange = ->
@@ -341,7 +341,7 @@ class UserEditView extends View
                     lst = @responseText.split " "
                     user_id = parseInt lst[ 0 ]
                     if user_id > 0
-                        $.cookie( "password", new_password, {expires:7} )
+                        Cookies.set( "password", new_password, {expires:7} )
                         user.edit_user_information()
                         document.getElementById( 'pwscomment' ).innerHTML = "Your password have been modified" if document.getElementById( 'pwscomment' )
                         document.getElementById( 'pwscomment' ).style.color = "green" if document.getElementById( 'pwscomment' )

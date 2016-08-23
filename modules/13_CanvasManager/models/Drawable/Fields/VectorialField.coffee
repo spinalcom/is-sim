@@ -163,10 +163,10 @@ class VectorialField extends Drawable
             @_data_buffer[ ni ] = gl.createBuffer()
             gl.bindBuffer gl.ARRAY_BUFFER, @_data_buffer[ ni ]
             
-            ne = el.indices._data.length
+            ne = el._get_indices()._data.length
             val = new Float32Array ne
             for i in [ 0 ... ne ]
-                val[ i ] = @_data._data[ el.indices.get i ]
+                val[ i ] = @_data._data[ el._get_indices().get i ]
             
             gl.bufferData gl.ARRAY_BUFFER, val, gl.STATIC_DRAW
     
@@ -226,10 +226,10 @@ class VectorialField extends Drawable
             
             dim = 3
             cpp = -1
-            pts = new Float32Array el.indices.size( 0 ) * dim * el.indices.size( 1 )
-            for i in [ 0 ... el.indices.size( 1 ) ]
-                for nn in [ 0 ... el.indices.size( 0 ) ]
-                    ni = el.indices.get [ nn, i ]
+            pts = new Float32Array el._get_indices().size( 0 ) * dim * el._get_indices().size( 1 )
+            for i in [ 0 ... el._get_indices().size( 1 ) ]
+                for nn in [ 0 ... el._get_indices().size( 0 ) ]
+                    ni = el._get_indices().get [ nn, i ]
                     
                     pts[ cpp += 1 ] = if @_vector[ 0 ]? then @_vector[ 0 ].get_sub_field( info ).get_val( info, ni ) else 0
                     pts[ cpp += 1 ] = if @_vector[ 1 ]? then @_vector[ 1 ].get_sub_field( info ).get_val( info, ni ) else 0

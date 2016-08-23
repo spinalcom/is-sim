@@ -7,9 +7,9 @@ clear_page = ->
 
 
 load_if_cookie_lab = () ->
-    if $.cookie("email") and $.cookie("password")
-        email = $.cookie("email")
-        password = $.cookie("password")
+    if Cookies.set("email") and Cookies.set("password")
+        email = Cookies.set("email")
+        password = Cookies.set("password")
         USER_EMAIL = email
         
         xhr_object = FileSystem._my_xml_http_request()

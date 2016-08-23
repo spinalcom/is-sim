@@ -23,9 +23,13 @@ class CanvasPoint extends Drawable
         super()
         
         @add_attr
+            name      : "Point"
             point     : new Point pos
-            radius    : if params.radius? then params.radius else 6 
+            radius    : new ConstrainedVal( 6, { min: 1, max: 20 } )
             color     : if params.color? then params.color else new Color( 255, 255, 255, 255 )
+            _edge_color: if params.edge_color? then params.edge_color else new Color( 0, 0, 0, 255 )
+            
+        if params.radius? then @radius.set params.radius
             
     z_index: ->
         return 1000
@@ -34,7 +38,7 @@ class CanvasPoint extends Drawable
     draw: ( info ) ->
         if info.ctx_type == 'gl'
         
-            points          = new PointTheme( @color, @radius.get(), @color, 1 )
+            points          = new PointTheme( @color, @radius.get(), @_edge_color, 1 )
 #             editable_points = new PointTheme( new Color(   0, 255,   0, 255 ), @radius.get(), new Color( 255, 255, 255, 255 ), 1 )
             
             proj = info.re_2_sc.proj @point.pos.get()

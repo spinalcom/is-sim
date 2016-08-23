@@ -10,9 +10,9 @@ launch_login = ( userid, home_dir, main = document.body ) ->
     login_view = new LoginView main
 
 load_if_cookie_login = () ->
-    if $.cookie("email") and $.cookie("password")
-        email = $.cookie("email")
-        password = $.cookie("password")
+    if Cookies.set("email") and Cookies.set("password")
+        email = Cookies.set("email")
+        password = Cookies.set("password")
         
         xhr_object = FileSystem._my_xml_http_request()
         xhr_object.open 'GET', "../modules/get_user_id?u=#{encodeURI email}&p=#{encodeURI password}", true

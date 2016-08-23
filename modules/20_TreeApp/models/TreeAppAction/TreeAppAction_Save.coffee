@@ -23,7 +23,7 @@ class TreeAppAction_Save extends TreeAppModule
         @name = 'Save'
         
         save_sub =
-            ico: "img/3floppy-mount-icone-4238-64.png"
+            fa : "fa-floppy-o"
             siz: 1
             txt: "Save"
             sub:
@@ -35,7 +35,7 @@ class TreeAppAction_Save extends TreeAppModule
         save_sub.sub.act.push 
             txt: "Save"
             key: [ "" ]
-            ico: "img/3floppy-mount-icone-4238-64.png"
+            fa : "fa-floppy-o"
             loc: true
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
@@ -49,13 +49,14 @@ class TreeAppAction_Save extends TreeAppModule
                         #name = item.to_string()
                         name = prompt "Item name", item.to_string() + new Date()
                         dir_save = FileSystem._home_dir
+                        dir_save = dir_save + "/__files__"
                         fs.load_or_make_dir dir_save, ( d, err ) =>
                             d.add_file name, item, model_type: "TreeItem"
                 
         
         save_sub.sub.act.push 
             txt: "Delete current tree item"
-            ico: "img/vide-trash-icone-8487-64.png"
+            fa : "fa-trash"
             key: [ "Del" ]
             loc: true
             fun: ( evt, app ) =>
@@ -79,7 +80,7 @@ class TreeAppAction_Save extends TreeAppModule
                 
         save_sub.sub.act.push 
             txt: "Copy tree item"
-            ico: "img/Files.png"
+            fa : "fa-copy"
             loc: true
             fun: ( evt, app ) =>
                 for path in app.data.selected_tree_items

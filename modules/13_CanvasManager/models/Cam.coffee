@@ -48,7 +48,7 @@ class Cam extends Model
         # normalization
         X = Vec_3.nor @X.get()
         Y = Vec_3.nor Vec_3.sub( @Y.get(), Vec_3.mus( Vec_3.dot( X, @Y.get() ), X ) )
-        Z = Vec_3.nor Vec_3.cro X, Y
+        Z = Vec_3.nor Vec_3.cro Y, X    # <- inverted to have a right-handed coord system
         O = [ Vec_3.dot( @O.get(), X ), Vec_3.dot( @O.get(), Y ), Vec_3.dot( @O.get(), Z ) ]
         f = 2 / @d.get() # * ( 1.0 + p *  ) )
         g = -f
@@ -77,7 +77,7 @@ class Cam extends Model
         [
               cx * f * X[ 0 ],   cy * f * Y[ 0 ],   h * Z[ 0 ],     p * Z[ 0 ],
               cx * f * X[ 1 ],   cy * f * Y[ 1 ],   h * Z[ 1 ],     p * Z[ 1 ],
-            - cx * f * X[ 2 ], - cy * f * Y[ 2 ], - h * Z[ 2 ],   - p * Z[ 2 ],         # remove all the "-" at this line to have a left-handed coordinates system
+              cx * f * X[ 2 ],   cy * f * Y[ 2 ],   h * Z[ 2 ],     p * Z[ 2 ],         # remove all the "-" at this line to have a left-handed coordinates system
               cx * g * O[ 0 ],   cy * g * O[ 1 ],          - i, 1 - p * O[ 2 ]
         ]
     
@@ -158,7 +158,7 @@ class Cam extends Model
     # around @C
     rotate: ( x, y, z ) ->
         if @threeD.get()
-            R = @s_to_w_vec [ x, y, z ]
+            R = @s_to_w_vec [ -x, -y, z ]
             @X.set Vec_3.rot @X.get(), R
             @Y.set Vec_3.rot @Y.get(), R
             @O.set Vec_3.add( @C.get(), Vec_3.rot( Vec_3.sub( @O.get(), @C.get() ), R ) )

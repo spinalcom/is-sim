@@ -16,7 +16,7 @@
 
 
 
-class SessionItem extends TreeItem
+class SessionItem extends TreeItem_Parametric
     constructor: ( name, app_data ) ->
         super()
 
