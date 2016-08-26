@@ -21,7 +21,8 @@ class TreeAppModule_Apps extends TreeAppModule
     constructor: (withConfig = true) ->
         super()
 
-        APPS = new Lst;
+        APPS = new Lst
+        APPS.push new TreeAppApplication_TreeItemParametric # Apps by default: insertion of TreeItems parametric
         for app in APPLIS
             APPS.push new window[app]()
     
