@@ -97,7 +97,7 @@ class Mesh extends Drawable
         return bc
     
     nb_points: ->
-        @points.length
+        @points[0]?.size(1)
 
     nb_elements: ->
         res = 0

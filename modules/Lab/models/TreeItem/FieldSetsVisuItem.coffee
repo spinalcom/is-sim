@@ -30,8 +30,8 @@ class FieldSetsVisuItem extends TreeItem_Automatic
                     for i in [ 0 ... @visualization.color_by.lst.length ]
                         output_data = @visualization.color_by.lst[i].data._data
                         output_data.clear()
-                        res_data = res.color_by.lst[i].data._data
-                        for j in [ 0 ... res_data.length ]
+                        res_data = res.color_by.lst[i]?.data._data
+                        for j in [ 0 ... res_data?.length ]
                             output_data.push res_data[j]
                  
     accept_child: ( ch ) ->
