@@ -42,7 +42,7 @@ class UndoManager
                 @patch_redo = []
                 
                 @patch_undo.push
-                    date: Model._counter
+                    date: ModelProcessManager._counter
                     data: @model.get_state date
             
 
@@ -127,7 +127,7 @@ class UndoManager
 
         # 
         if @patch_undo.length
-            @patch_undo[ @patch_undo.length - 1 ].date = Model._counter + 2
+            @patch_undo[ @patch_undo.length - 1 ].date = ModelProcessManager._counter + 2
 
     _date_last_snapshot: ->
         if @patch_undo.length
