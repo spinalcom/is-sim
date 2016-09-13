@@ -419,24 +419,12 @@ class TreeView extends View
         if @get_computable_of( info.item )
 #             console.log info.item._computation_mode.get()
 #             console.log info.item._computation_state.get()
-            if not info.item._computation_mode.get() and not info.item._computation_state.get()
+#             if not info.item._computation_mode.get() and not info.item._computation_state.get()
 #                 console.log "TreeComputableItem"
-                classTitle = "TreeComputableItem"
+            classTitle = "TreeComputableItem"
         
-            else if info.item._computation_state.get() or info.item._pending_state.get() or info.item._processing_state.get() or info.item._finish_state.get()
-                classTitle = "TreeProcessingItem"
-                
-#             else
-#                 if info.item._computation_mode.get() == true
-#                     if info.item._computation_state.get() == true
-#                         classTitle = "TreeAutoComputedItem"
-#                     else
-#                         classTitle = "TreeAutoComputableItem"
-#                 else
-#                     if info.item._computation_state.get() == true
-#                         classTitle = "TreeComputedItem"
-#                     else
-#                         classTitle = "TreeComputableItem"
+#             else if info.item._computation_state.get() # or info.item._pending_state.get() or info.item._processing_state.get() or info.item._finish_state.get()
+#                 classTitle = "TreeProcessingItem"
 
             new_dom_element
                 parentNode : div
