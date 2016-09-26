@@ -121,6 +121,7 @@ class Mesh extends Drawable
     clear: ->
         @points.clear()
         @_elements.clear()
+        @original_index.clear()
     
     add_theme_if_undef: ->
         if not @_theme?
