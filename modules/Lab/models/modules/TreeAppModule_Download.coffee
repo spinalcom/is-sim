@@ -10,7 +10,7 @@ class TreeAppModule_Download extends TreeAppModule
         # download a file on harddrive
         @actions.push
             txt: "Download result files"
-            ico: "img/upload_icon_3.png"
+            fa : "fa-download"
             fun: ( evt, app ) =>  
                 items = app.data.selected_tree_items
                 for path_item in items
@@ -27,7 +27,7 @@ class TreeAppModule_Download extends TreeAppModule
         # add a file on the is-sim desk       
         @actions.push
             txt: "Add result files on the is-sim desk"
-            ico: "img/upload_icon_2.png"
+            fa : "fa-cloud-download"
             fun: ( evt, app ) =>
                 items = app.data.selected_tree_items
                 for path_item in items

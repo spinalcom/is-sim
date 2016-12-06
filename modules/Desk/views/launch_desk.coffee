@@ -31,8 +31,8 @@ launch_desk = ( main = document.body ) ->
     
     #load or create config file
     FileSystem._home_dir = "__users__/root"
-    FileSystem._userid   = "644"
-    FileSystem._password = "4YCSeYUzsDG8XSrjqXgkDPrdmJ3fQqHs"
+    FileSystem._userid   = if USER?.userid then USER.userid else "1657"
+    FileSystem._password = if USER?.password then USER.password else "4YCSeYUzsDG8XSrjqXgkDPrdmJ3fQqHs"
     bs = new BrowserState
     fs = new FileSystem
     config_dir = FileSystem._home_dir + "/__config__" 

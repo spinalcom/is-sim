@@ -201,7 +201,7 @@ class TreeAppModule_Sketch extends TreeAppModule
                     new Element_Line [ current_point + 7, current_point + 4 ]
                 ]
                 
-                surfaces = for ls in [ [ +1, 0, +1, 1, +1, 2, +1, 3 ], [ +1, 0, +1, 5, -1, 8, -1, 4 ], [ +1, 1, +1, 6, -1, 9, -1, 5 ], [ +1, 2, +1, 7, -1,10, -1, 6 ], [ -1, 3, +1, 7, +1,11, -1, 4 ], [ +1, 8, +1, 9, +1,10, +1,11 ] ]
+                surfaces = for ls in [ [ -1, 0, -1, 1, -1, 2, -1, 3 ], [ +1, 0, +1, 5, -1, 8, -1, 4 ], [ +1, 1, +1, 6, -1, 9, -1, 5 ], [ +1, 2, +1, 7, -1,10, -1, 6 ], [ +1, 3, -1, 7, -1,11, +1, 4 ], [ +1, 8, +1, 9, +1,10, +1,11 ] ]
                     new Element_BoundedSurf [
                         { o: ls[ 0 ], e: lines[ ls[ 1 ] ] }
                         { o: ls[ 2 ], e: lines[ ls[ 3 ] ] }

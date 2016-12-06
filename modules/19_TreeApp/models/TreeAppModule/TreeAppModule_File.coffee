@@ -167,7 +167,14 @@ class TreeAppModule_File extends TreeAppModule
                                                     img_temp = new Img res
                                                     item.img = img_temp
                                             done = true
-                                            
+                                else if elem.name.ends_with( ".raw" )
+                                    file_item = new RawVolume
+                                    file_item._children.push new FileItem elem
+                                    for item in app.data.get_selected_tree_items()
+                                        if item.accept_child? file_item
+                                            item.add_child file_item
+                                            done = true         
+                                                
                             if not done 
                                 alert "No image can be found in this directory"
                     

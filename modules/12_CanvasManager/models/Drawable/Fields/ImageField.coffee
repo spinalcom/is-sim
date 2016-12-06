@@ -58,7 +58,7 @@ class ImageField extends Drawable
     draw: ( info ) ->
 #         console.log "yop"
         if @rgba.height
-            Img._draw_persp_rec info, @rgba, 0, 0, [ 0, @rgba.height, -0.01 ], [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, 1 ], @_date_tex, @tex, @src          # -0.01 is for the Z gap
+            Img._draw_persp_rec info, @rgba, 0, 0, [ 0, @rgba.height, 0.01 ], [ 1, 0, 0 ], [ 0, -1, 0 ], [ 0, 0, 1 ], @_date_tex, @tex, @src          # 0.01 is for the Z gap
             
     z_index: () ->
         return 20000

@@ -18,13 +18,15 @@
 
 #
 class TreeAppModule_Apps extends TreeAppModule
-    constructor: (withConfig = true) ->
+    constructor: (withConfig = true, APPS = undefined) ->
         super()
+        
+        if not APPS
+            APPS = new Lst
+            APPS.push new TreeAppApplication_TreeItemParametric # Apps by default: insertion of TreeItems parametric
+            for app in APPLIS
+                APPS.push new window[app]()
 
-        APPS = new Lst;
-        for app in APPLIS
-            APPS.push new window[app]()
-    
         @name = 'Apps'
         @visible = true
                 

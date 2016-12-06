@@ -21,9 +21,9 @@
 class Mesh extends Drawable
     constructor: ( params = {} ) ->
         super()
+       
         
-#         for key, val of params
-#             this[ key ]?.set? val
+
         @add_attr
             _theme : new Theme 
         
@@ -38,7 +38,7 @@ class Mesh extends Drawable
                 line_color: @_theme.lines.color
             
             # geometry
-            points   : new Lst # "add_point" can be used to fill the list
+            points   : []
             _elements: [] # list of Element_Triangle, Element_Line, ...
             
             # helpers
@@ -48,7 +48,7 @@ class Mesh extends Drawable
             _selected_elements: [] # elements refs
             _pelected_elements: [] # elements refs
             
-            
+            original_index : []
             
         # default move scheme
         @move_scheme = MoveScheme_3D
@@ -59,35 +59,45 @@ class Mesh extends Drawable
         
         @delete_selected_points_callback = []
         
-    # add a new node
-    add_point: ( pos = [ 0, 0, 0 ] ) ->
-        res = new Point pos, new @move_scheme
-        @points.push res
-        return res
         
-    # 
+        
+    add_point: ( pos = [ 0, 0, 0 ] ) ->
+        if not @points[0] then @points.push new TypedArray_Float64 [ 3, 0 ]
+        ind = @points[0].size(1) + 1
+        @points[0].resize [ 3, ind ]
+        @points[0].set_val [ 0, ind-1 ], pos[0]
+        @points[0].set_val [ 1, ind-1 ], pos[1]
+        @points[0].set_val [ 2, ind-1 ], pos[2]       
+
+    set_point: ( indice, pos = [ 0, 0, 0 ] ) ->
+        @points[0].set_val [ 0, indice ], pos[0]
+        @points[0].set_val [ 1, indice ], pos[1]
+        @points[0].set_val [ 2, indice ], pos[2]  
+
+    get_point: ( indice ) ->
+        [ @points[0].get([ 0, indice ]), @points[0].get([ 1, indice ]), @points[0].get([ 2, indice ]) ]
+
+
     add_element: ( element ) ->
         @_elements.push element
     
     # get the maximal values or coordinates (absolute)
     bounding_coordinates: () ->
-        
-        
-        for point in @points when point instanceof Point
+        for i in [ 0 ... @points[0].size(1) ]
             if not bc
-                p0 = point.pos.get()
+                p0 = @get_point i
                 bc = [ [ p0[0], p0[0] ], [ p0[1], p0[1] ], [ p0[2], p0[2] ] ]
             else    
-                p = point.pos
+                p = @get_point i
                 for i in [ 0 .. 2 ]
-                    if p[ i ].get() > bc[ i ][ 0 ]
-                        bc[ i ][ 0 ] = p[ i ].get()
-                    else if p[ i ].get() < bc[ i ][ 1 ]
-                        bc[ i ][ 1 ] = p[ i ].get()
+                    if p[ i ] > bc[ i ][ 0 ]
+                        bc[ i ][ 0 ] = p[ i ]
+                    else if p[ i ] < bc[ i ][ 1 ]
+                        bc[ i ][ 1 ] = p[ i ]
         return bc
     
     nb_points: ->
-        @points.length
+        @points[0]?.size(1)
 
     nb_elements: ->
         res = 0
@@ -111,6 +121,7 @@ class Mesh extends Drawable
     clear: ->
         @points.clear()
         @_elements.clear()
+        @original_index.clear()
     
     add_theme_if_undef: ->
         if not @_theme?
@@ -137,9 +148,13 @@ class Mesh extends Drawable
             draw_points = false
             
             # 2d screen projection
-            proj = for p, i in @points when p instanceof Point
-                info.re_2_sc.proj p.pos.get()
-                    
+            proj = for i in [ 0 ... @points[0]?.size(1) ]
+                info.re_2_sc.proj @get_point(i)
+                
+#             proj = for p, i in @points[0] when p instanceof Point
+#                 console.log p, i
+#                 info.re_2_sc.proj p.pos.get()
+
             if @visualization.point_edition?.get() and info.sel_item[ @model_id ]? # when this is selected and points are editable
 
             
@@ -190,7 +205,7 @@ class Mesh extends Drawable
             return true
     
         # -> 2d canvas
-        if @points?.length
+        else if @points?.length
             # 2d screen projection
             proj = for p, i in @points
                 info.re_2_sc.proj p.pos.get()
@@ -358,8 +373,9 @@ class Mesh extends Drawable
     
     
     update_min_max: ( x_min, x_max ) ->
-        for m in @points when m instanceof Point
-            p = m.pos.get()
+        for i in [ 0 ... @points[0]?.size(1) ]
+            p = [ @points[0].get([0,i]), @points[0].get([1,i]), @points[0].get([2,i]) ]
+
             for d in [ 0 ... 3 ]
                 x_min[ d ] = Math.min x_min[ d ], p[ d ]
                 x_max[ d ] = Math.max x_max[ d ], p[ d ]
@@ -445,221 +461,4 @@ class Mesh extends Drawable
                 dist = d
                 best = n
         return best
-        
-    #     delete_selected_point: ( info ) ->
-    #         for i in [ 0 ... @points.length ]
-    #             if @_selected.contains_ref @points[ i ]
-    #                 @delete_point i
-    #     
-    #     delete_point: ( index ) ->
-    #         if typeof index == "undefined"
-    #             return false
-    #         unlinkedPoint = []
-    #         #delete every line linked to the point
-    #         if @lines.length > 0
-    #             for i in [@lines.length-1..0]
-    #                 if @lines[ i ].indexOf( index ) != -1
-    #                     pos = @lines[ i ].indexOf( index )
-    #                     if @lines[ i ].length == 2
-    #                         unlinkedPoint.push(@lines[ i ][ 1 - pos ].get()) #get the point which is alone
-    #                         @lines.splice i, 1
-    #                         @polygons[ 0 ].splice i, 1
-    #                         @actualise_polygons -1, i
-    #                         
-    #                     else if @lines[i].length >= 3
-    #                         pos = []
-    #                         #search for multiple occurrence of index in current line
-    #                         #return an array of index
-    #                         for j, k in @lines[i]
-    #                             if j.get() == index
-    #                                 pos.push k
-    #                                 
-    #                         for ind in pos
-    #                             if ind != 1
-    #                                 unlinkedPoint.push(@lines[i][1].get())
-    #                             @lines[ i ].splice ind, 1
-    #                             @polygons[ 0 ].splice ind, 1
-    #                             @actualise_polygons -1, ind
-    #                         
-    #                         if @lines[i].length == 3
-    #                             #check if it was a circle and the clicked point was not the point who appear twice
-    #                             if @lines[ i ][ 0 ].get() == @lines[i][ 1 ].get() || @lines[i][ 0 ].get() == @lines[i][ 2 ].get()
-    #                                 @lines[ i ].splice 0, 1
-    #                                 @polygons[ 0 ].splice 0, 1
-    #                                 @actualise_polygons -1, 0
-    #                             else if @lines[i][ 1 ].get() == @lines[i][ 2 ].get()
-    #                                 @lines[ i ].splice 1,1
-    #                                 @polygons[ 0 ].splice 1, 1
-    #                                 @actualise_polygons -1, 1
-    # 
-    #             #relink lonely point
-    #             if unlinkedPoint.length > 0
-    #                 for i in [0...unlinkedPoint.length-1]
-    #                     #                 for j in [0...@lines.length]
-    #                     #                     if @lines[j].indexOf(unlinkedPoint[i]) == -1 || @lines[j].indexOf(unlinkedPoint[i+1]) == -1 #  check if this line already exist or not
-    #                     @lines.push [ unlinkedPoint[ i ], unlinkedPoint[ i + 1 ] ]
-    #                     @polygons[ 0 ].push @lines.length-1
-    #         
-    #         #delete the point and change index of every line definition
-    #         @points.splice index, 1
-    #         for i in [ 0...@lines.length ]
-    #             for j in [ 0...@lines[ i ].length ]
-    #                 if @lines[ i ][ j ].get() >= index
-    #                     @lines[ i ][ j ]._set( @lines[ i ][ j ].get() - 1 )
-
-    #     break_line_from_selected: ( info ) ->
-    #         for i in [ 0 ... @points.length ]
-    #             if @_selected.contains_ref @points[ i ]
-    #                 @break_line i
-    #     
-    #     break_line: ( index ) ->
-    #         if typeof index == "undefined"
-    #             return false
-    #         if @lines.length > 0
-    #             for i in [ @lines.length-1..0 ]
-    #                 if @lines[ i ].indexOf(index) != -1
-    #                     if @lines[ i ].length >= 3
-    #                         pos = @lines[ i ].indexOf index
-    #                         if pos > 0
-    #                             tmpLines = @lines[ i ].slice( 0, pos + 1 )
-    #                             @lines.push tmpLines
-    #                             @polygons[ 0 ].push @lines.length-1
-    # 
-    #                         l = @lines[ i ].length
-    #                         after = l - pos
-    #                         if after > 0
-    #                             #after pos
-    #                             tmpLines = @lines[ i ].slice( pos, l )
-    #                             @lines.push tmpLines
-    #                             @polygons[ 0 ].push @lines.length-1
-    #                          
-    #                         @lines.splice i, 1
-    #                         @polygons[ 0 ].splice i, 1
-    #                         @actualise_polygons -1, i
-
-    #     make_curve_line_from_selected: ( info ) ->
-    #         for i in [ 0 ... @points.length ]
-    #             if @_selected.contains_ref @points[ i ]
-    #                 @make_curve_line i
-    
-    #add "value" to all polygons data started at index "index" (use for ex when a line is deleted)
-    #     actualise_polygons: ( val, index ) ->
-    #         for polyg in @polygons
-    #             for i in [ index ... polyg.length ]
-    #                 polyg[ i ].set polyg[ i ].get() + val
-
-    #     make_curve_line: ( index ) ->
-    #         if typeof index == "undefined"
-    #             return false
-    #         if @lines.length > 0
-    #             pointToJoin = []
-    #             lineWithCurve = []
-    #             for i in [ @lines.length-1..0 ]
-    #                 if @lines[ i ].indexOf(index) != -1
-    #                     pos = @lines[ i ].indexOf index
-    #                     if @lines[ i ].length == 2
-    #                         pointToJoin.push [ i, @lines[ i ][ 1 - pos ].get() ]
-    #                     else
-    #                         lineWithCurve.push [ i, pos ]
-    #                         
-    #             # case two segment
-    #             if pointToJoin.length == 2
-    #                 # delete two segment
-    #                 for ind in [0...pointToJoin.length]
-    #                     @lines.splice(pointToJoin[ ind ][ 0 ], 1)
-    #                     @polygons[ 0 ].splice pointToJoin[ ind ][ 0 ], 1
-    #                     @actualise_polygons -1, pointToJoin[ ind ][ 0 ]
-    #                     
-    #                 # make an arc with selectionned point on middle
-    #                 @lines.push [ pointToJoin[ 0 ][ 1 ], index, pointToJoin[ 1 ][ 1 ] ]
-    #                 @polygons[ 0 ].push @lines.length-1
-    #                 
-    #             # case one segment and one arc
-    #             else if lineWithCurve.length == 1 && pointToJoin.length == 1
-    #                     
-    #                 # we need to know if the new point is on the begining of arc or at the end
-    #                 pos = lineWithCurve[ 0 ][ 1 ]
-    #                 lineNumber = lineWithCurve[ 0 ][ 0 ]
-    #                 indexDel = pointToJoin[ 0 ][ 0 ]
-    #             
-    #                 if pos == 0
-    #                     @lines[ lineNumber ].unshift pointToJoin[ 0 ][ 1 ]
-    #                     @polygons[ 0 ].unshift 0
-    #                     @actualise_polygons 1, 1
-    #                 else
-    #                     @lines[ lineNumber ].push pointToJoin[ 0 ][ 1 ]
-    #                     @polygons[ 0 ].push @lines.length-1
-    #                 
-    #                 # delete segment
-    #                 @lines.splice( indexDel, 1)
-    #                 @polygons[ 0 ].splice indexDel, 1
-    #                 @actualise_polygons -1, indexDel
-    #                 #deletion is not actualised
-    #                 
-    #             # case two arc
-    #             else if lineWithCurve.length == 2
-    #                 newLine = []
-    #                 #concat two arc
-    #                 
-    #                 lineNumber = lineWithCurve[ 0 ][ 0 ]
-    #                 l = @lines[ lineNumber ].length
-    #                 pos = lineWithCurve[ 0 ][ 1 ]
-    #                 #check if we need to inverse array, for first line default is yes
-    #                 if pos == (l-1)
-    #                     for el, i in @lines[ lineNumber ]
-    #                         newLine[ i ] = el
-    #                     
-    #                 else
-    #                     for i in [0...@lines[ lineNumber ].length]
-    #                         newLine[ (l-1)-i ] = @lines[ lineNumber ][ i ]
-    #                 
-    #                  #check if we need to inverse array, for first line default is no
-    #                 lineNumber = lineWithCurve[ 1 ][ 0 ]
-    #                 l = @lines[ lineNumber ].length
-    #                 pos = lineWithCurve[ 1 ][ 1 ]
-    #                 k = newLine.length - 1 # -1 prevent selected point to be in doublon
-    #                 if pos == (l-1)
-    #                     for i in [0...@lines[ lineNumber ].length]
-    #                         newLine[ k + (l-1)-i ] = @lines[ lineNumber ][ i ]
-    #                 else
-    #                     for el, i in @lines[ lineNumber ]
-    #                         newLine[ k + i ] = el
-    #                 
-    #                 #delete old arc
-    #                 for ind, i in lineWithCurve[0]
-    #                     @lines.splice(lineWithCurve[0][ ind ] - i, 1)
-    #                     @polygons[ 0 ].splice lineWithCurve[0][ ind ] - i, 1
-    #                     @actualise_polygons -1, lineWithCurve[0][ ind ] - i
-    #                 @lines.push newLine
-    #                 @polygons[ 0 ].push @lines.length-1
-    #                 
-            
-    #     _draw_polygons: ( info, proj ) ->
-    #         for polyg in @polygons.get()
-    #             if polyg.length > 0
-    #                 info.ctx.beginPath()
-    #                 info.ctx.strokeStyle = "red"#@_theme.line_color.to_hex()
-    #                 info.ctx.fillStyle   = "rgba(200,200,125,100)"#@_theme.line_color.to_hex()
-    #                 
-    #                 
-    #                 first_point = @lines[ polyg[ 0 ] ][ 0 ]
-    #                 
-    #                 pos_first_point = proj[ first_point ]
-    #                 info.ctx.moveTo( pos_first_point[ 0 ], pos_first_point[ 1 ] )
-    #                 
-    #                 for index_line in polyg
-    #                     for i in [ 1 ...@lines[ index_line ].length ] # don't draw first point (because he is the same as the last line points)
-    #                         p = @lines[ index_line ][ i ]
-    #                         pos_p = proj[ p ]
-    #                         if pos_p?
-    #                             info.ctx.lineTo( pos_p[ 0 ], pos_p[ 1 ] )
-    #                 # come back to first point
-    #                 info.ctx.lineTo( pos_first_point[ 0 ], pos_first_point[ 1 ] )
-    #                 
-    #                 if @visualization.display_style.get() == "Wireframe"
-    #                     info.ctx.fill()#only for debug
-    #                     info.ctx.stroke()
-    #                 else
-    #                     info.ctx.fill()
-    #                 info.ctx.closePath()
-
+  
